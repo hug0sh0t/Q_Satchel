@@ -1,0 +1,284 @@
+{% extends 'base.html' %}
+{% block head_title %}CHARTS{% endblock head_title %}
+
+{% block content %}
+{% load humanize %}
+{% if username|cut:" " == request.user|cut:" " %}
+
+         
+<div id="analyzeTipclose" class="analyzeTipPOP" style="margin:auto;cursor:pointer;background:#61AE5D;border-radius:15px;display:none;z-index:1500;position:fixed;padding:20px;width:500px;bottom:20px;left:0px;right:0px"> 
+
+<strong style="color:white">
+Cumulative sum of your trades 
+</strong>
+</div>
+
+
+</center><br>
+
+{% if pockets_amount > 0 %}
+
+<a href="/profiles/analyze/charts/allocation">
+  <div style="padding:15px;position:fixed;z-index:8000;right:90px;bottom:15px;border-radius:50%;border:none" class="card shadow shadow-lg">
+  <img src="/staticmedia/eight.svg" class="filter-green" style="width:35px;height:35px"/>
+  </div>
+  </a>
+{% endif %}
+          
+
+
+
+
+
+<a href="/pockets/deepdive">
+  <div style="padding:15px;position:fixed;z-index:8000;right:15px;bottom:15px;border-radius:50%;border:none" class="card shadow shadow-lg">
+  <img src="/staticmedia/sub.svg" class="filter-green" style="width:35px;height:35px"/>
+  </div>
+  </a>
+<div class="card" style="">
+
+        <span style="position:relative;padding:40px;width:100%;background:none" class="card">
+
+
+
+
+
+          {% if pockets_amount > 0 %}
+
+       
+    <center style="padding:20px;width:100%" class="">
+            
+      
+      <h6 id="manualshowtip" style="cursor:pointer;color:grey;opacity:0.8">Portfolio Balance </h6> 
+              {% if satchel >= 0 %}
+                 <h1 style="">$ {{satchel}} </h1>
+                {% else %}
+                 <h1 style="color:crimson">$ {{satchel}} </h1>
+
+
+                {% endif %}
+
+        <small style="color:grey">  {{pocketsamount}} Total Trades </small><hr style="width:80%">
+      <div class="card rounded" style="padding:7px;background:#50c44a;width:150px"><strong style="color:white">  {{WINS}} In Profit</strong></div><br>
+      <div class="card rounded" style="padding:7px;background:crimson;width:150px"><strong style="color:white">  {{LOSSES}} Losses </strong></div>
+
+    </center>
+    
+    
+
+
+<br>
+<center style="margin:auto;padding:20px;width:85%" class="container darkercard rounded">
+
+          
+
+          <span class="col">
+
+
+          <span style="width:60%;position:relative;color:#50C44A;padding:8px" class=""><small style="color:grey">Profit</small>    ${{pos_satchel}}</span><br>
+          
+          <span style="width:60%;position:relative;color:crimson;padding:10px" class=""><small style="color:grey">Loss</small>    ${{neg_satchel}}</span><br>
+
+
+
+
+
+      
+
+ 
+          
+        {% if avg_satchel >= 0 %}
+          <span style="width:60%;position:relative;color:#50C44A;padding:10px" class=""><small style="color:grey">Net Average</small>    ${{avg_satchel}}</span><br>
+            {% else %}
+          <span style="width:60%;position:relative;color:crimson;padding:10px" class=""><small style="color:grey">Net Average</small>    ${{avg_satchel}}</span><br>
+        {% endif %}
+          </span>
+          </p></p>
+        </span>
+
+ 
+
+
+
+      </center>
+
+
+
+
+
+         {% if satchel < 100000000 %}
+         <br>
+         <div class="darkercard shadow rounded" style="padding:50px">
+                <canvas id="pieChart" style="display:none;position:relative;height:60vh;width:80vw" class="container container-fluid my-5"></canvas>
+                <br><br><h6 style="color:grey">Equity Chart</h6>
+                <canvas id="myChart" style="position:relative;height:60vh;width:80vw" class=""></canvas><br>
+         </div>
+        {% else %}
+{% comment %} STUFF GOES HERE FOR WHEN OVER 100 MILLION {% endcomment %}
+<br><br>
+<center class="settings" style="padding:20px;width:80%;border-radius:15px"><strong style="color:grey"> Unrealistic charting inputs 
+<img src="/staticmedia/shout.svg" style="width:30px;height:30px" class="filter-grey" /></strong></center>
+          <br><br><br><br>
+        {% endif %}
+            <br>
+
+
+
+        
+    
+        
+        {% if satchel >= 0 %} 
+          <p style="color:#50C44A;font-size:25px">
+        {% else %}
+          <p style="color:crimson;font-size:25px">
+        {% endif %}
+
+      
+
+
+
+
+
+            {% else %}    
+
+            <br><br><br><br>
+                      <center>
+                      <p style="color:grey"> Your trade analysis will show up here  
+                      <img src="/staticmedia/cleanplan.svg" style="opacity:.8;wdith:100px;height:100px" />  </p>
+                      <a href="/" class="btn btn-lg rounded zoom" style="color:white;font-weight:bold;background:#50C44A;padding:20px"> Track a Trade</a>
+                      </center>
+
+ 
+            <br><br>
+          {% endif %}
+
+
+
+
+    </div>
+
+{% endif %}
+
+<script>
+
+    const pocketendpoint = '/api/chart'
+    var sumInsertArray = []
+    var labelInsertArray = [];
+    var dynamicLineRBGArray = [];
+
+
+
+
+
+   // LINE Chart Handle +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        $.ajax({
+        method:"GET",
+        url: pocketendpoint,
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data) {
+            labels = data.labels
+            satchel_sent = data.satchel
+            defaultData = data.default
+            dynamicRBGArray = data.dynamicRBGArray
+            labelInsertArray = data.labelInsertArray
+            sumInsertArray = data.sumInsertArray
+            dynamicLineRBGArray = data.dynamicLineRBGArray
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+     
+            var tester = " Sum of your Pockets  $"
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labelInsertArray,
+                    datasets: [{
+                        label: "$",
+                        stepped: true,
+                        // tension: 10,
+                        // borderDash: [10, 10],
+                        data: sumInsertArray,
+                        //backgroundColor: 'rgba(42, 255, 247, 0.7)',
+                        backgroundColor: 'transparent',
+                        
+                        borderColor: 'rgba(42, 255, 247, 1)',
+                        borderWidth: 5,
+                        hoverBorderWidth: 20,
+                        radius: 2,
+                        hitRadius: 15,
+                        tension: 0.2
+                        
+                    }],
+                    
+
+                },
+                options: {
+
+                    
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                fontSize: 12,
+                                fontColor: (setTheme == 'light.css') ? "#c8c8c8" : "#aeaeae",
+                                callback: function(value, index, values) {
+                                    return '$ ' + value;
+                                }
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                callback: function(value) {
+                                   // return value.substr(0, 12) + "...";//truncate
+                                },
+                                fontColor: (setTheme == 'light.css') ? "rgba(16, 151, 16, 0.8)" : "#ffe2b6",
+                                fontSize: 10,
+                                beginAtZero: true
+                               }                        
+                        }],
+
+                    },
+
+                    legend: {
+                        display: false
+                    },
+
+                    interaction: {
+                        mode: 'point'
+                    },
+                    tooltips: {
+                            // Disable the on-canvas tooltip
+                            enabled: true,
+                            backgroundColor: (setTheme == 'light.css') ? '#24292d' : '#f4f4f4',
+                            titleFontColor: (setTheme =='light.css') ? "#50C44A" : "#50C44A",   
+
+
+                            xPadding: 30,
+                            yPadding: 30,
+                            displayColors: false,
+                            callbacks: {
+                                // title: function() {},
+                                label: function(tooltipItems, data) { 
+                                  return ' $ ' +  tooltipItems.yLabel ;
+                                },
+                                labelTextColor: function(context) {return (setTheme == 'dark.css') ? '#24292d':'#fff'},
+                            }
+                  
+                    }
+                }    
+            })
+        },
+        error: function(error_data) {
+            console.log("error")
+            console.log(error_data)
+        }
+    })
+   // LINE Chart Handle +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+</script>
+
+{% endblock content %}

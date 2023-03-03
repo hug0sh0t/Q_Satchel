@@ -1,0 +1,155 @@
+
+{% extends 'base.html' %}
+{% block head_title %} DeepDive Trade Analysis{% endblock head_title %}
+{% block content %}
+{% load humanize %}
+<br>
+
+{% if messages %}
+<div style='margin:auto;border:none;position:absolute;bottom:5px;left:20px;right:20px;font-weight:bold;padding:10px;z-index:1600;width:350px' 
+id="pmessage_container" 
+class="darkercard alert fade show container" 
+role="alert">
+<ul  class="messages" style="margin:auto">
+    {% for message in messages %}
+    <span{% if message.tags %} class="justify-content-center {{ message.tags }}"{% endif %}>
+
+         <h6 class="mx-2" style=""> {{ message }}   </h6>
+
+    </span>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<h2 class="container">  Total Trades : {{pockets_amount}}<br><a style="font-size:15px;color:goldenrod" href="/">
+     Insert +</a> 
+  
+       <!--ALL DELETE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+     
+           
+   
+         <button type="button"
+         onclick="popUp()"
+         style="font-weight:bold;box-shadow:none;font-size:14px;border:none;background:none"
+         class="btn btn-outline-danger btn-lg my-2">clear all pockets 
+         </button>
+
+ 
+     
+             <div id="popper"
+             style="margin:auto;z-index:9000;display:none;position:fixed;padding:20px;right:50px;left:50px"
+             data-toggle="popover"
+             data-trigger="focus" class="rmvButt darkercard rounded shadow shadow-lg">
+                 <form id="bye-form-pock" class="" method="post" action="/api/pockets/full/delete"> {% csrf_token %}
+                    <h6 style="opacity:.5" class="container">
+                      By clicking Authorize, all pockets created under this account will be deleted from our Database</h6> 
+                    <div 
+                     style="cursor:pointer;padding:20px;font-size:18px" 
+                     id="bye-pock"
+                     type="submit" 
+                     class="redcard rounded">
+                     Authorize  </div>
+                     <div class="card close_full_delete" style="cursor:pointer;padding:20px;font-size:18px" > Nevermind</div>
+                 </form>
+                </div>
+     
+
+
+     <!--ALL DELETE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+  
+  </h2>
+
+<br><br>
+  <div id="pocket_list_format" class="" style="font-size:15px;position:relative;margin:auto;padding:20px"> 
+    
+
+  {% if pockets_amount > 0 %}
+  
+      
+
+          <table class="table container" style="position:relative;border:darkgrey">
+            <thead>
+              <tr>
+        
+                <th scope="col">Title</th>
+                <th scope="col">Direction</th>
+                <th scope="col">Exchange </th>
+
+
+                <th scope="col">PnL </th>
+                <th scope="col">USD Position Size</th>
+                <th scope="col">Created</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            
+            {% for ploop in requested_users_pockets %}
+    
+              <tr>
+                
+          
+                  <td>{{ploop.title}}</td>
+                  {% if ploop.direction == "Long" %}
+                    <td style="color:#50C44A">{{ploop.direction}}</td>
+                  {% elif ploop.direction == "Short" %}
+                  <td style="color:crimson">{{ploop.direction}}</td>
+                  
+                  {% else %}
+                  <td ><h6>{{ploop.direction}}</h6></td>
+                
+                  {% endif %}
+
+        
+
+                  <td style=""><h6> {{ploop.exchange}} </h6></td>
+
+   
+
+                  {% if ploop.profit_or_loss > 0 %}
+                  <td style="color:#50C44A"> +${{ploop.profit_or_loss}} </td>
+                  {% elif ploop.profit_or_loss < 0 %}
+                  <td style="color:crimson"><h6> ${{ploop.profit_or_loss}} </h6></td>
+                  {% else %}
+                  <td style=""><h6> ${{ploop.profit_or_loss}} </h6></td>
+                  {% endif %}
+                  
+                {% if ploop.price >= 0 %}
+                <td><h6 style="font-weight:bold">${{ploop.price}}</h6></td>
+                {% else %}
+                <td><h6 style="font-weight:bold;color:crimson">${{ploop.price}}</h6></td>
+                {% endif %}
+  
+                
+                <td>{{ploop.timestamp | timesince}} ago</td>
+              <td><a href="/pockets/{{ploop.id}}/change"> 
+                <img src="/staticmedia/eyes.svg" style="width:20px;height:20px" class="filter-green"/>
+              </a></td>
+              <td>
+
+                <form action="/api/pockets/{{ploop.id}}/delete" method="POST" style="" data-value="from_deepdive_lobby">
+                  {%csrf_token%}
+                  <button id="trash_button" name="delmainbtn" style="background:none;cursor:pointer;border:none;width:20px;height:20px">
+                    <img src="/staticmedia/dookies.svg" style="width:25px;height:25px" class="filter-red"></button></form>
+              </td>
+
+              </tr>
+
+
+              {% endfor %}
+          </table>
+    
+  
+        </div>
+  
+  {% else %}
+  NO TRADES BEING TRACKED
+  
+  {% endif %}
+  
+
+  
+  {% endblock content %}

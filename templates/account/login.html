@@ -1,0 +1,139 @@
+{% extends 'unauthlogin.html' %}
+{% load socialaccount %}
+{% block head_title %} QSatchel Login  | Finance Tracker{% endblock head_title %}
+{% block content %}
+
+
+
+  <center style="background-position: center;background-repeat: no-repeat;background-size: cover;background-image: url('/staticmedia/4k.png');border-bottom-left-radius:7%;border-bottom-right-radius:7%">
+    
+
+<div class="cookiesPOP card shadow" style="bottom:5px;border-top-left-radius: 0;border-bottom-left-radius: 0;display:none;z-index:1500;position:fixed;padding:25px;width:70%;background:#50c44a6b">
+ <button id="cookieclose" type="button" class="btn btn-lg me-2 m-auto" style="background:#61A85D;border:none;z-index:2000;color:#fff" data-bs-dismiss="toast" aria-label="Close">
+  
+  accept 
+
+
+</button>
+<strong style="color:white;font-family:arial">
+<img src="/staticmedia/infocookie.png" style="width:100px;height:100px;top:0;float:right;position:absolute;opacity:0.2"/>
+Cookies are used here at QSatchel. <a style="font-size:15px;color:#fff" href="/cookiespolicy/"> Click Here  </a> for deeper details on the information utilized
+</strong>
+</div>
+
+        <!---->
+          {% if messages %}
+        <div style='padding:10px;width:55%;background:#8DC797;position:absolute;right:5px;top:5px;z-index:4000' 
+        id="pmessage_container" 
+        class="toast alert fade show card shadow shadow-lg" 
+        role="alert">
+        <ul class="messages">
+            {% for message in messages %}
+            <span{% if message.tags %} style="color:#fff;font-size:20px" class="justify-content-center {{ message.tags }}"{% endif %}>
+              
+              <strong>{{ message }}</strong>
+            </span>
+            </div>
+            {% endfor %}
+          </ul>
+          
+        {% endif %}
+
+
+            <img alt="logobaby"
+            class="" 
+            style="position:relative;width:70%;height:70%" 
+            src="/staticmedia/awesome.svg"/>
+
+
+  
+  </center>
+
+
+<center style="background-color:#1f2022">
+{% comment %} <center style="background-color:rgba(65,160,60,0.5)"> {% endcomment %}
+
+            <h6 class="my-0" style="color:#fff;font-size:55px;position:relative">
+
+       
+        <br>
+          <h6 class="my-0" style="color:#fff;font-size:55px;position:relative">
+            Cumulative PnL analysis  
+          <img src="/staticmedia/built.png" id="rotationFunction" style="width:70px;height:70px"/>
+
+            <h6 style="color:grey;font-size:45px">
+              Track your Trades ,Investments, Fund Allocations, and even NFT Valuations </h6><br><br><br><br>
+ 
+
+<div>
+  <center class="btn-group-vertical" style="center:0px;position:relative;z-index:1000">
+
+
+
+    <span class="col">
+
+
+      
+        <a style="padding:40px;width:100%;font-weight:bold;color:white;border-radius:25px;border-style:solid" 
+        class="manualConnect" href="/oauth/manual/login">
+
+        <img alt="logobaby"
+        class="" 
+        style="position:relative;width:20%;height:20%" 
+        src="/staticmedia/darkerrunway.svg"/>
+    GET STARTED
+        </a>
+      </span>
+<br><br><br> 
+
+ 
+
+
+
+
+
+
+<center style="padding:12px;background:#36393d" class="card shadow shadow-lg">
+
+  <h6 class="container container-fluid" style="color:#fff;font-size:12px">
+    <img src="/staticmedia/docs.png" style="width:30px;height:30px"/>
+    By Using QSatchel,  you accept these 
+    <a style="text-decoration:none;color:#fff;font-size:15px" href='/qstermsofservice/'> Terms of Use </a> and  
+    <a style="color:#fff;font-size:15px" href='/privacypolicy/'> Privacy Policy </a>  Conditions <br>
+</h6>
+
+
+
+
+
+
+
+
+
+
+</center>
+
+<br><br>
+<br><br>
+
+
+    
+
+  </center> 
+ 
+
+
+
+
+      </div>
+    </div>
+
+
+
+  </center>
+</div>
+<h6 style='color:#fff;position:fixed;right:10px;bottom:1px;opacity:0.7;font-family:arial;z-index:1000'>© 2022 QSATCHEL</h6>
+
+    
+
+{% endblock content %}

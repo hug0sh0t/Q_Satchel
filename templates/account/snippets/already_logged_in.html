@@ -1,0 +1,7 @@
+{% load i18n %}
+{% load account %}
+
+{% user_display user as user_display %}
+<p><strong>{% trans "By the way, " %}:</strong> {% blocktrans %} you are currently logged in as {{ user_display }} 
+<img src="/staticmedia/whiterunway.svg" style="width:70px;height:70px"/>
+{% endblocktrans %}</p>

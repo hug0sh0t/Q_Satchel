@@ -1,0 +1,16 @@
+{% extends "unauthbase.html" %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Login Cancelled" %}{% endblock %}
+
+{% block content %}
+<div class="container container-fluid">
+<h1>{% trans "Third-Party Authentication Halt" %}</h1>
+
+{% url 'account_login' as login_url %}
+
+<p>{% blocktrans %}
+<hr>
+<h6>You Stopped a connection to a Third-Party account, </h6><a style="font-size:25px" href="{{login_url}}">Click Here</a>.{% endblocktrans %}</p>
+<div>
+{% endblock %}

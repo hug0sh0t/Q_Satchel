@@ -1,0 +1,76 @@
+.hide {
+  display: block;
+  opacity: 0.00;
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;
+  }
+  
+  .myDIV:hover + .hide {
+  display: block;
+  opacity: 1.0;
+  
+  }
+  
+  .darktype {
+    display:none;
+  }
+
+  .lighttype {
+    display:block;
+  }
+
+.custom-file-upload {
+  background-color: none;
+  
+}
+
+.form-control, .form-select {
+    box-shadow:none;
+    background-color:#f2f2f2;
+    border:none;
+}
+
+  
+body {
+  background: linear-gradient(#e9f5f8, #ffffff, #ffffff, #e9f5f8);
+}
+
+.btn:hover {
+  color:rgb(11, 22, 44)
+}
+
+.card {
+  background-color: #f2f2f2;
+}
+
+.card:hover {
+  background-color: #dcdcdc;
+
+}
+
+input {
+  background-color: #f4f4f4;
+  border:#c8c8c8;
+
+}
+
+.input-group-text {
+  background-color: #f2f2f2;
+  border:#c8c8c8;
+
+}
+
+.jumbotron {
+  background-color: #ece9e9
+}
+
+a { 
+    text-decoration:none;
+    color:#000;
+  }
+  
+a:hover {
+  color:#a50000
+}
+

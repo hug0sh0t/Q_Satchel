@@ -1,0 +1,239 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<!doctype html>
+<html lang="en" > <!--style="background-color:#4F72B0"-->
+  <head>
+    <!-- BUY BITCOIN -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5,user-scalable=yes">
+    <meta name="description" content="Description">
+    <meta name="keywords" content="Keywords">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <!-- BUY BITCOIN  -->
+    <meta name="full-screen" content="yes">
+    <meta name="browsermode" content="application">
+
+    <link rel="shortcut icon" type="image/png" href="/staticmedia/whiterunway.svg">
+    <!-- BUY BITCOIN -->
+    <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" 
+    crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" id="toggle_style" href="{% static 'css/unauth.css' %}" >
+
+    <title>{% block head_title %}{% endblock head_title %}</title>
+
+<style>
+
+  
+    .asteriskField {
+        display: none;
+    }
+
+    .zoom {
+      padding: 50px;
+      background-color: transparent;
+      transition: transform .2s; 
+      height: 80px;
+      margin: 0 auto;
+      transition: 0.5s;
+    }
+    .zoom:hover {
+      transform: scale(1.2); 
+    }
+
+    .center {
+        margin: auto;
+        width: 60%;
+        padding: 20px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .hideform {
+        display: none;
+    }
+
+
+.loader-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-green{
+  filter: invert(64%) sepia(8%) saturate(2971%) hue-rotate(69deg) brightness(98%) contrast(102%);
+}
+
+.filter-white{
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(327deg) brightness(104%) contrast(103%);
+}
+
+
+#rotationFunction {
+  animation: rotation 20s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+
+
+
+</style>
+
+  </head>
+  <body style="background:#1f2022">
+    <noscript>Javascript is needed to Fully Enjoy QSatchel</noscript>
+{% comment %}
+        <div class="loader-wrapper">
+      <img src="/staticmedia/live.gif" style="width:40%;height:40%"/>
+    </div>{% endcomment %}
+
+  <div class="global_fade">    
+    {% block content %}
+    {% endblock content %}
+  </div>
+
+ <script>
+console.log("NO ACTIVE FATAL ERRORS")
+
+
+
+     // $(window).on("load",function(){
+     //     $(".loader-wrapper").fadeOut(1500);
+     // });
+      $(".global_fade").fadeOut(0)
+      $(".global_fade").fadeIn(1000)
+      {% comment %} $('.center').show() {% endcomment %}
+
+
+      setTimeout(function(){
+          $('.cookiesPOP').fadeIn(400);
+      },4000)
+
+
+      $('#cookieclose').on('click', function () {
+        
+          $('.cookiesPOP').fadeOut(400);
+        
+        //
+      })
+
+
+
+
+    $(document).ready(function() {
+        $("#log-user").click(function() {
+          // disable button
+          if ($('#usernameinput').val() == '' || $('#passwordinput').val() == '') {
+              $(this).prop("disabled", true);
+        
+          } else {
+              $(this).prop("disabled", true);
+              // add spinner to button
+              $(this).html(
+                `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Connecting... `
+              );
+          }
+
+    setTimeout(function(){
+        /*submit the form after 5 secs*/
+
+        if ($('#usernameinput').val() == '' || $('#passwordinput').val() == '') {
+          $('.inputwrong').attr("style", "color:crimson;display:block");
+          $("#log-user").prop("disabled", false);
+        } else {
+          $('#form-log').submit();
+        }
+    },700)
+
+        });
+    });
+
+    $(document).ready(function() {
+        $("#set_pass_toggle").click(function() {
+          // disable button
+          $(this).prop("disabled", true);
+          // add spinner to button
+          $(this).html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Removing your Linked Account...`
+          );
+
+    setTimeout(function(){
+        /*submit the form after 5 secs*/
+        $('#set_pass_toggle_form').submit();
+    },1500)
+
+        });
+    });
+
+    $(document).ready(function() {
+        $("#toggle_email").click(function() {
+          // disable button
+          $(this).prop("disabled", true);
+          // add spinner to button
+          $(this).html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Creating Instructions...`
+          );
+
+    setTimeout(function(){
+        /*submit the form after 5 secs*/
+        $('#toggle_email_form').submit();
+    },1000)
+
+        });
+    });
+
+    $(document).ready(function() {
+        $("#make-toggle").click(function() {
+          // disable button
+          $(this).prop("disabled", true);
+          // add spinner to button
+          $(this).html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Getting Your Satchel Ready ...   `
+          );
+
+    setTimeout(function(){
+        /*submit the form after 5 secs*/
+        $('#make-form').submit();
+    },2500)
+
+        });
+    });
+
+  var message_ele = document.getElementById("pmessage_container");
+  setTimeout(function(){ 
+    if (message_ele) {
+      $(".loginalert").fadeOut(200);
+      message_ele.style.display = "none"; 
+    }
+  }, 2500);
+
+  $(document).ready(function(){
+    {% block jquery %}{% endblock %}
+  })
+
+
+
+
+</script>
+
+  </body>
+</html>

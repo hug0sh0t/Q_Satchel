@@ -1,0 +1,728 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- universal metas -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5,user-scalable=yes">
+    <meta name="description" content="Description">
+    <meta name="keywords" content="Keywords">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    
+    <script src="{% url 'js-catalog' %}"></script>
+    <script src="{% static '/admin/js/core.js' %}"></script>
+
+   
+    <!-- UC Mobile Browser  -->
+    <meta name="full-screen" content="yes">
+    <meta name="browsermode" content="application">
+
+    <link rel="shortcut icon" type="image/png" href="/staticmedia/whiterunway.svg">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" 
+    crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" id="toggle_style" href="{% static 'css/light.css' %}" >
+    <link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}">
+
+
+
+    <title>{% block head_title %}{% endblock head_title %}</title>
+
+<style>
+    .asteriskField {
+        display: none;
+    }
+
+    
+    .zoom {
+
+      background-color: transparent;
+      transition: transform .2s; 
+      transition: 0.5s;
+    }
+    .zoom:hover {
+      transform: scale(0.9); 
+    }
+
+
+
+    @keyframes wiggle {
+        0% { transform: rotate(0deg); }
+      80% { transform: rotate(0deg); }
+      85% { transform: rotate(5deg); }
+      95% { transform: rotate(-5deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    h1.wiggle {
+      display: inline-block;
+      animation: wiggle 2.5s infinite;
+    }
+
+    h1.wiggle:hover {
+      animation: none;
+    }
+
+}
+
+
+
+
+
+</style>
+
+
+
+  </head>
+  <body>
+    <noscript>Please Enable Javascript!</noscript>
+    {% include "components/utilitybar.html" %}
+
+  <div class="main_fade">  
+    {% block content %}
+    {% endblock content %}
+    <br><br>
+    {% comment %} <center style="bottom:0;opacity:0.8"><h6>Powered By <a  style="color:white;font-size:15px" href='/credits/'> <img src="/staticmedia/superanons.png" style="width:40px;height:40px"/> </a></h6></center> {% endcomment %}
+  </div>
+
+
+<script>
+
+      $(".main_fade").fadeOut(0)
+      $(".main_fade").fadeIn(200)
+
+
+      
+
+    $('#create_pocket_button').on('click', function () {
+        $('#pocket_create_panel').attr("class","row");
+        $('#pocket_create_panel_filler').attr("class","row");
+        $('#create_panel_closer').attr("class","card shadow shadow-lg");
+        window.scrollTo(0, 0);
+        
+        
+    })
+
+
+
+
+    $('#create_panel_closer').on('click', function () {
+      $('#pocket_create_panel').attr("class"," row d-none");
+      $('#pocket_create_panel_filler').attr("class"," container d-none");
+      $('#create_panel_closer').attr("class","card shadow shadow-lg d-none");
+    })
+
+    
+
+
+
+// POCKET FORMATTING SELECTOR FUNCTIONS
+// LOWER PRICES FIRST
+
+
+  $('#lowPriceFirstSelector').on('click', function () {
+      $('#positionSelector').attr("value","price");
+  })
+
+// HIGHER PRICES FIRST
+$('#highPriceFirstSelector').on('click', function () {
+      $('#positionSelector').attr("value","-price");
+  })
+
+// RECENT FIRST
+$('#recentSelector').on('click', function () {
+      $('#positionSelector').attr("value","-pocket_time_instance");
+
+
+
+  })
+
+// OLDER FIRST
+$('#olderSelector').on('click', function () {
+      $('#positionSelector').attr("value","pocket_time_instance");
+
+  
+  })
+
+// A-Z
+$('#forwardAplhaSelector').on('click', function () {
+      $('#positionSelector').attr("value","title");
+
+  })
+// Z-A
+$('#backwardAplhaSelector').on('click', function () {
+      $('#positionSelector').attr("value","-title");
+
+  })
+
+
+
+  $(".pocketCreateButton").on({
+    mouseenter: function () {
+        //stuff to do on mouse enter
+        $('.pocketCreateButton').attr("class", "pocketCreateButton btn btn-lg btn-outline-success rounded shadow shadow-lg");
+        
+
+    },
+    mouseleave: function () {
+        //stuff to do on mouse leave
+        $('.pocketCreateButton').attr("class", "pocketCreateButton btn btn-outline-success btn-lg rounded");
+
+    }
+});
+
+  $("#hoveractivate").on({
+    mouseenter: function () {
+        //stuff to do on mouse enter
+        $('#pocketCards').attr("style", "height:100px;padding:25px");
+
+    },
+    mouseleave: function () {
+        //stuff to do on mouse leave
+        $('#pocketCards').attr("style", "height:80px;padding:25px");
+
+    }
+});
+
+
+  $("#createHover").on({
+    mouseenter: function () {
+        //stuff to do on mouse enter
+        $('#createMenuBarIcon').attr("class", "filter-green");
+
+    },
+    mouseleave: function () {
+        //stuff to do on mouse leave
+        $('#createMenuBarIcon').attr("class", "filter-grey");
+
+    }
+});
+
+
+ $("#analyzeHover").on({
+    mouseenter: function () {
+        //stuff to do on mouse enter
+        $('#analyzeMenuaBarIcons').attr("class", "filter-green");
+
+    },
+    mouseleave: function () {
+        //stuff to do on mouse leave
+        $('#analyzeMenuaBarIcons').attr("class", "filter-grey");
+
+    }
+});
+
+
+ $("#passwordHover").on({
+    mouseenter: function () {
+        //stuff to do on mouse enter
+        $('#passwordMenuaBarIcons').attr("class", "filter-green");
+
+    },
+    mouseleave: function () {
+        //stuff to do on mouse leave
+        $('#passwordMenuaBarIcons').attr("class", "filter-grey");
+
+    }
+});
+
+ $("#profileHover").on({
+    mouseenter: function () {
+        //stuff to do on mouse enter
+        $('#pMenuaBarIcons').attr("class", "filter-green");
+
+    },
+    mouseleave: function () {
+        //stuff to do on mouse leave
+        $('#pMenuaBarIcons').attr("class", "filter-grey");
+
+    }
+});
+
+ $("#settingsHover").on({
+    mouseenter: function () {
+        //stuff to do on mouse enter
+        $('#settingsMenuaBarIcons').attr("class", "filter-green");
+
+    },
+    mouseleave: function () {
+        //stuff to do on mouse leave
+        $('#settingsMenuaBarIcons').attr("class", "filter-grey");
+
+    }
+});
+
+ $("#logoutHover").on({
+    mouseenter: function () {
+        //stuff to do on mouse enter
+        $('#LogoutMenuBar').attr("class", "filter-red");
+
+    },
+    mouseleave: function () {
+        //stuff to do on mouse leave
+        $('#LogoutMenuBar').attr("class", "filter-grey");
+
+    }
+});
+
+
+
+
+  $('#menuToggleOpen').on('click', function () {
+    
+      $('#dropdownPHONE').fadeIn(300);
+      $('#menuToggleOpen').attr("style","display:none");
+      $('#menuToggleClose').attr("style","width:30px;height:30px");
+    //
+  })
+
+    $('#menuToggleClose').on('click', function () {
+    
+      $('#dropdownPHONE').fadeOut(100);
+      $('#menuToggleOpen').attr("style","width:30px;height:30px;transform:rotate(180deg)");
+      $('#menuToggleClose').attr("style","display:none");
+    //
+  })
+
+
+  $('#negativeTIPER').on('click', function () {
+    
+        $('.negativeTipPOP').fadeIn(400);
+
+        setTimeout(function(){
+            $('.negativeTipPOP').fadeOut(400);
+        },7000) // ten seconds
+
+
+
+  })
+
+
+  $('#negativeTipclose').on('click', function () {
+    
+      $('.negativeTipPOP').fadeOut(300);
+    
+    //
+  })
+
+  $('#padTipclose').on('click', function () {
+    
+      $('.padTipPOP').fadeOut(300);
+    
+    //
+  })
+ $('#manualshowpad').on('click', function () {
+    
+      $('.padTipPOP').fadeIn(300);
+    
+    //
+  })
+
+// Exhange Rates Open and Close
+ $('#exchangeShow').on('click', function () {
+    
+      $('.exchangeRatesPanel').fadeIn(300);
+      $('#exchangeRateClose').fadeIn(300);
+      
+    
+    //
+  })
+ $('#exchangeRateClose').on('click', function () {
+    
+      $('.exchangeRatesPanel').fadeOut(300);
+      $('#exchangeRateClose').fadeOut(300);
+    
+    //
+  })
+
+
+
+  $('#manualshowtip').on('click', function () {
+    
+      $('.analyzeTipPOP').fadeIn(300);
+    
+    //
+  })
+
+  $('#analyzeTipclose').on('click', function () {
+    
+      $('.analyzeTipPOP').fadeOut(300);
+    
+    //
+  })
+
+
+
+
+var setTheme = localStorage.getItem('theme')
+
+    function getCookie(name) { // COOKIE FUNCTION FOUND ON MAIN API
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+
+  $(document).ready(function() {
+        $("#starterpanel").click(function() {
+          $('.newpock').fadeOut(500);
+        });
+            
+  });
+
+
+
+
+    $(document).ready(function() {
+
+        $("#filtertoggle").click(function() {
+          $('.togglePanel').attr("style","width:100%;padding:10px;border:none;position:relative;display:none;border-radius:0%");
+          $('.filterPanel').attr("style","width:100%;padding:10px;border:none;position:relative;display:block;border-radius:0%")
+        });
+
+        $("#filterclose").click(function() {
+          $('.togglePanel').attr("style","width:100%;padding:10px;border:none;position:relative;display:block;border-radius:0%");
+          $('.filterPanel').attr("style","width:100%;padding:10px;border:none;position:relative;display:none;border-radius:0%")
+        });
+
+
+            
+  });
+
+
+
+
+////////////////////////////////////////////////TWO FUNCTIONS
+  $(document).ready(function(){
+    function updateText(btn, newCount){
+      
+      btn.text(newCount)
+      
+    }
+  
+    $(".connection_toggle").click(function(e){
+      e.preventDefault()
+        // Change src attribute of image
+      var this_ = $(this)
+      var flwing_this = $(".following_am")
+      var flwer_this = $(".followers_am")
+      var likeUrl = this_.attr("data-href")
+      const csrftoken = getCookie('csrftoken');
+
+      if (likeUrl) {
+        $("")
+        $.ajax({
+              url: likeUrl,
+              method: "POST",
+              data: {action:"FOLLOW"},
+              headers: {"X-CSRFToken": csrftoken},
+              success: function(data){
+        
+
+                if (data.action == "FOLLOW"){
+
+                  updateText(this_, "UNFOLLOW")
+                  $(".plusflw").html("<img src='/staticmedia/follow.png' style='width:40px;height:40px' class='plusflw' />")
+                  if (data.followers_amount == 1) {
+                    flwer_this.html("<h6 class='followers_am'>"+ data.followers_amount + " FOLLOWER </h6>") 
+                  } else {
+                    flwer_this.html("<h6 class='followers_am'>"+ data.followers_amount + " FOLLOWERS</h6>") 
+                  }
+                  //$(finalPass).attr("src","/media/parking/yes.png")
+                  // this_.attr("style","color:#f26060;font-weight:bold;text-decoration:none;background:none;border:none;padding:0;box-shadow:none;outline:none")
+
+                } else if (data.action == "UNFOLLOW") {
+
+                  updateText(this_, "FOLLOW")
+                                    $(".plusflw").html("<img src='/staticmedia/follow.png' style='width:40px;height:40px' class='plusflw' />")
+
+                  if (data.followers_amount == 1) {
+                    flwer_this.html("<h6 class='followers_am'>"+ data.followers_amount + " FOLLOWER</h6>") 
+                  } else {
+                    flwer_this.html("<h6 class='followers_am'>"+ data.followers_amount + " FOLLOWERS</h6>") 
+                  }
+                  // $(finalPass).attr("src","/media/parking/no.png")
+                  // this_.attr("style","color:#bfa904;text-decoration:none;background:none;border:none;padding:0;box-shadow:none;outline:none")
+
+                } else {
+                  console.log(likeUrl)
+                  console.log("Error in Connection Button")
+                  
+                }
+              
+              }, error: function(error){
+                console.log(error)
+                console.log("error")
+              }
+            })
+      }
+    })
+  })
+
+////////////////////////////////////////////////TWO FUNCTIONS
+
+
+    $(document).ready(function() {
+        $("#bye-pock").click(function() {
+          // disable button
+          $(this).prop("disabled", true);
+          // add spinner to button
+          $(this).html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Removing your Pockets...`
+          );
+
+    setTimeout(function(){
+        /*submit the form after 5 secs*/
+        $('#bye-form-pock').submit();
+    },1500)
+
+        });
+    });
+
+
+    $(document).ready(function() {
+        $("#destroy-user").click(function() {
+          // disable button
+          $(this).prop("disabled", true);
+          // add spinner to button
+          $(this).html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Removing All of Your Data`
+          );
+
+    setTimeout(function(){
+        /*submit the form after 5 secs*/
+        $('#destroy-form').submit();
+    },5000)
+
+        });
+    });
+
+
+    function deactivate() {
+      var x = document.getElementById("DePopper");
+      if (x.style.display === "none") {
+        $(".rmvButt").fadeIn(300)
+      } else {
+        x.style.display = "none";
+      }
+    }
+
+
+    function searchUp() {
+      var x = document.getElementById("people");
+      var y = document.getElementById("spocks");
+      if (x.style.display === "none") {
+        
+        $(".pocketFade").fadeIn(300)
+        $(".poeopleFade").fadeOut(300)
+
+        $(".peepsearch").attr("style", "color:#05e9ff;font-size:20px;")
+        document.getElementById("peoplebtn").disabled = true;
+        $(".pocketinform").attr("style", "display:none")
+        
+        $(".pocksearch").attr("style", "color:grey;font-size:20px;")
+        document.getElementById("pocketbtn").disabled = false;
+
+        if (x) { x.style.display = "block" }  
+        if (y) { y.style.display = "none" }
+        
+      } else if (x.style.display === "block") {
+        $(".peopleFade").fadeOut(300)
+        $(".pocketFade").fadeIn(300)
+        $(".pocksearch").attr("style", "color:#05e9ff;font-size:20px;")
+        document.getElementById("pocketbtn").disabled = true;
+        $(".peepsearch").attr("style", "color:grey;font-size:20px;")
+        document.getElementById("peoplebtn").disabled = false;
+        $(".pocketinform").attr("style", "display:block")
+
+        if (x) { x.style.display = "none" }       
+        if (y) { y.style.display = "block" }
+      }
+    }
+
+    $('.close_full_delete').on('click', function () {
+    
+      $('#popper').fadeOut(300);
+      
+  })
+
+    function popUp() {
+      var x = document.getElementById("popper");
+      if (x.style.display === "none") {
+        $(".rmvButt").fadeIn(500)
+      } else {
+        x.style.display = "none";
+      }
+    }
+
+   
+
+    function formUp() {
+      var x = document.getElementById("formpopper");
+      var y = document.getElementById("dtype");
+      var z = document.getElementById("ltype");
+
+      if (x.style.display === "none") {
+        $(".formrmvButt").fadeIn(300)
+        $(".cbook").fadeOut(0)
+        $(".obook").fadeIn(200)
+      } else {
+        $(".obook").fadeOut(0)
+        $(".cbook").fadeIn(200)
+        x.style.display = "none";
+
+
+      }
+    }
+
+
+
+
+  var setTheme = localStorage.getItem('theme')
+
+
+      // this is an older token function
+  function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+    var csrftoken = getCookie('csrftoken');
+    var cssFile = "{% static 'css' %}"
+
+    
+    
+
+    if (setTheme == null) {
+      toggleStyle('light.css')
+    } else {
+      toggleStyle(setTheme)
+    }
+
+    function toggleStyle(sheet) {
+      var pricecolor = document.getElementById("search_price");
+
+      document.getElementById("toggle_style").href = cssFile + "/" + sheet
+      localStorage.setItem('theme', sheet)
+      if (sheet == 'dark.css') {
+        console.log("DARK GATE: ACTIVE")
+
+
+        $(".lighttoggle").fadeIn(10)
+        $(".darktoggle").fadeOut(10)
+        $("#darksearch").fadeOut(0)
+        $("#lightsearch").fadeIn(10)
+        $(".darklegend").fadeOut(0)
+        $(".lightlegend").fadeIn(700)
+        $(".gk").fadeOut(0)
+        $(".yk").fadeIn(700)
+        $(".mainnavbar").attr("style","background:#323336")
+
+
+        $("#dropdownPHONE").attr("style","right:0px;left:0px;position:absolute;z-index:300000;display:none;padding:40px;width:90%;background:#323336;margin:auto")
+
+      } else if (sheet == 'light.css') {
+        console.log("LIGHT GATE:  ACTIVE")
+
+
+        $("#darksearch").fadeIn(10)
+        $("#lightsearch").fadeOut(10)
+        $(".lighttoggle").fadeOut(0)
+        $(".darktoggle").fadeIn(50)
+        $(".lightlegend").fadeOut(0)
+        $(".darklegend").fadeIn(700)
+        $(".yk").fadeOut(0)
+        $(".gk").fadeIn(700)
+        $(".mainnavbar").attr("style","background:#fff")
+
+        $("#dropdownPHONE").attr("style","right:0px;left:0px;position:absolute;z-index:300000;display:none;padding:40px;width:90%;background:#fff;margin:auto")
+
+      }
+      updateTheme(sheet)
+    }
+
+    function loadSettings() {
+        var url = "{% url 'papi'%}"
+        fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/json',
+          }
+        }).then((response) => response.json()).then(function(data) {
+          // console.log('Data: ', data)
+          var theme = data.value;
+          if (theme == 'light.css' || null) {
+            toggleStyle('light.css')
+          } else if (theme == 'dark.css') {
+            toggleStyle('dark.css')
+          }
+      }).catch(function(error) {
+          console.log(error)
+          console.log('load settings server error  ')
+      });
+
+    }
+
+    loadSettings()
+    
+    function updateTheme(theme) {
+      var url = "{%url 'papi_update_theme'%}"
+      fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+            'X-CSRFToken': csrftoken,
+          },
+          body: JSON.stringify({'theme':theme})
+      }).catch(function(error) {
+          console.log(error)
+          console.log('update theme server error')
+      });
+    }
+
+
+
+
+</script>
+   
+ <script>
+  var message_ele = document.getElementById("pmessage_container");
+  setTimeout(function(){ 
+    if (message_ele) {
+      message_ele.style.display = "none"; 
+    }
+  }, 2500);
+
+  $(document).ready(function(){
+    {% block jquery %}{% endblock %}
+  })
+
+ </script>
+
+  </body>
+</html>

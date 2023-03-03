@@ -1,0 +1,93 @@
+{% extends 'unauthbase.html' %}
+{% load crispy_forms_tags %}
+
+{% block head_title %} Custom Create{% endblock head_title %}
+{% block content %}
+
+<style></style>
+
+<a style="z-index:1000" href="/oauth/login">
+<img class="mx-2 my-5" src="/staticmedia/back.png" style="width:60px;height:60px;float:left;z-index:1000;position:relative" alt="return arrow" />
+</a>
+
+{% if messages %}
+<br><br><div style='padding:10px;float:right;background:none;position:relative' 
+id="pmessage_container" 
+class="toast alert fade show container card shadow shadow-lg" 
+role="alert">
+<ul class="messages">
+    {% for message in messages %}
+    <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+      <center style="color:#c8c8c8;font-size:20px">
+...
+      {{ message }}</center>
+    </span>
+    </div>
+    {% endfor %}
+  </ul>
+  
+{% endif %}
+
+
+<small style="color:grey;position:fixed;top:10px;left:20px">  
+<img src="/staticmedia/ssl.svg" style="width:80px;height:80px" class="">
+SSL ENCRYPTED and REGULATION COMPLIANT  
+</small>
+<center>  
+  
+  
+  <form style="padding:20px;margin-top:150px" id="make-form" class="card container shadow-lg" method="post">
+    {% csrf_token %}
+    {{ form.username | as_crispy_field }} 
+    
+
+    {{ form.password1 | as_crispy_field }}
+    {{ form.password2 | as_crispy_field }}
+    <button id="make-toggle" style="border:none" class="btn btn-outline-success" type="submit">Create Account</button>
+  </form>
+
+<p style="margin-top:100px">
+<img src="/staticmedia/whiterunway.svg" style="wdith:100px;height:100px"/>
+ Sensitive information is NOT required here at Qsatchel, simply create your username and password, and start tracking your trades
+<br><small style="color:grey"> No Ads, No Payments, No BS<br> 
+These Tools are created to help traders around the world organize their Finances for FREE 
+
+</small> 
+</p>
+
+<center style="padding:12px;background:#f1f1f1;width:70%" class="shadow shadow-lg rounded">
+
+  Continuous Integration/Delivery<br> By
+ <a style="font-size:15px;color:black" href="https://github.com/hug0sh0t"> Seanchester Rosario 
+ <img src="/staticmedia/gitlogo.svg" class="filter-white" style="width:30px;hegiht:30px" />
+ </a><br>
+  
+ <small style="color:grey;font-size:12px">Thank you for your Donations ! </small><br>
+ 
+ 
+ <input type="text" style="display:none" value="0x9B75096910D4725563EbAe4362F301ec2cb89b3e" id="myInput">
+ <span><img style="width:40px;height:40px;cursor:pointer" onclick="myFunction()" src="/staticmedia/ethb.png"/>
+ 
+  / <a href="https://cash.app/hug0sh0t"><img src="/staticmedia/cashapp.svg" style="cursor:pointer;width:55px;height:55px"/></a>
+ </span>
+ <script>
+ function myFunction() {
+   /* Get the text field */
+   var copyText = document.getElementById("myInput");
+ 
+   /* Select the text field */
+   copyText.select();
+   copyText.setSelectionRange(0, 99999); /* For mobile devices */
+ 
+   /* Copy the text inside the text field */
+   navigator.clipboard.writeText(copyText.value);
+   
+   /* Alert the copied text */
+   alert("You have copied Seanchester's ERC20 Ethereum Address! your donations are truly appreciated");
+ }
+ </script>
+</center>
+
+
+</center>
+{% endblock content %}

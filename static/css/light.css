@@ -1,0 +1,256 @@
+button:focus {outline:0;}
+.hide {
+  display: block;
+  opacity: 0.00;
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;
+  }
+  
+
+  td {
+    color:black
+  }
+  
+  .myDIV:hover + .hide {
+  display: block;
+  opacity: 1.0;
+  
+  }
+  
+  .darktype {
+    display:none;
+  }
+
+  .lighttype {
+    display:block;
+  }
+
+.custom-file-upload {
+  background-color: none;
+  
+}
+
+.form-control, .form-select {
+    box-shadow:none;
+    background-color:#f2f2f2;
+    border:none;
+}
+
+.form-control:focus, .form-select:focus {
+  box-shadow:0px 5px #50c44a72;
+  border:none;
+}
+
+.searchbar {
+  height:10px;
+  border:solid;
+  border-color:grey;
+  background-color:#ffffff;
+ 
+}
+
+.searchbar:focus, .searchbar:hover {
+  text-decoration: none;
+  background-color:#f3f3f3;
+ 
+}
+
+
+  
+body {
+  background: #eeecec;
+}
+
+.btn:hover {
+  color:rgb(11, 22, 44)
+}
+
+.jumbotron {
+  background-color: #fff;
+  background: #fff;
+  border:none;
+}
+
+.redcard {
+  background-color: #9b2525a6;
+  color: white;
+
+}
+
+.redcard:hover {
+  background-color: #a51616;
+  color: white;
+
+}
+
+
+.card, .settings {
+  background-color: rgb(255, 255, 255);
+}
+
+
+.card:hover, .settings:hover {
+  background-color: rgba(255, 255, 255, 0.842);
+}
+
+.darkercard {
+  background-color: #f0f0f0;
+}
+
+td {
+  color:grey;
+
+}
+
+th {
+  color:grey;
+  }
+
+
+
+input {
+  background-color: #dcdcdc;
+
+
+}
+
+.input-group-text {
+  background-color: #dcdcdc;
+
+
+}
+
+u {
+  text-decoration-color: rgb(23, 179, 218);
+}
+
+a { 
+    text-decoration:none;
+    color:#000;
+  }
+  
+  a:hover {
+    color:#50C44A;
+  }
+
+.insertUtil, .analyzeUtil {
+  color: grey;
+}
+
+.insertUtil:hover, .analyzeUtil:hover {
+  color: #50C44A;
+}
+
+.logoutUtil {
+  color: grey;
+}
+
+.logoutUtil:hover {
+  color: rgb(180, 29, 59);
+}
+
+.vDateField {
+  border-style: solid;
+  border-color: rgb(221, 221, 221);
+  border-width: 3px;
+  width:200px
+}
+
+.allocationbtn:hover { 
+  color:#fff;
+}
+
+
+.weight { 
+  color:grey;
+}
+
+
+.weight:hover { 
+  color:#50C44A;
+}
+
+#exchangeShow { 
+  color:grey;
+}
+
+
+#exchangeShow:hover { 
+  color:#50C44A;
+}
+
+.positionButtons:hover {
+  color: #50C44A;
+}
+
+.filter-green{
+  filter: invert(64%) sepia(8%) saturate(2971%) hue-rotate(69deg) brightness(98%) contrast(102%);
+}
+
+.filter-gold{
+  filter: invert(75%) sepia(62%) saturate(735%) hue-rotate(359deg) brightness(103%) contrast(104%);
+}
+
+.filter-red{
+  filter: invert(13%) sepia(100%) saturate(2956%) hue-rotate(350deg) brightness(107%) contrast(108%);
+}
+
+.filter-grey{
+  filter: invert(56%) sepia(6%) saturate(5%) hue-rotate(88deg) brightness(88%) contrast(91%);
+}
+
+.filter-white {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(293deg) brightness(104%) contrast(102%);
+}
+
+ul {
+  padding: 0px;
+  list-style: none;
+}
+
+#valuebox {
+  background: url("/staticmedia/search.svg") no-repeat scroll 7px 7px;
+  background-position: right 30px center;
+  padding-right:30px;
+  padding:15px;
+  border:none;
+  box-shadow:none;
+  width:100%;
+  z-index:1000
+}
+
+
+#lowPriceFirstSelector, #highPriceFirstSelector, #recentSelector, #olderSelector, #backwardAplhaSelector, #forwardAplhaSelector {
+ 
+  border-radius:15px;
+  padding:15px;
+  width:320px;
+}
+
+#lowPriceFirstSelector:hover, #highPriceFirstSelector:hover, #recentSelector:hover, #olderSelector:hover, #backwardAplhaSelector:hover, #forwardAplhaSelector:hover {
+  background:#e6e6e6;
+  border-radius:15px;
+  padding:15px;
+  width:320px;
+}
+
+
+
+
+#trash_button {
+  color:crimson;
+  background:#e9e8e8;
+}
+
+#trash_button:hover {
+  color:#fff;
+  background:#f5f5f5;
+}
+
+#createHover:hover, #analyzeHover:hover ,#passwordHover:hover, #profileHover:hover , #settingsHover:hover, #logoutHover:hover{
+  background:#f5f5f5;
+  border-radius:10px
+  
+}
+

@@ -1,0 +1,27 @@
+language: python
+dist: xenial
+services:
+  - postgresql
+python:
+  - "3.9"
+arch:
+  - amd64
+  - ppc64le
+env:
+  - DJANGO=3.0 DB=postgres
+before_install:
+  - pip install -q flake8
+  - PYFLAKES_NODOCTEST=1 flake8 modeltranslation
+before_script:
+  - psql -c 'create database modeltranslation;' -U postgres
+install:
+  - if [[ $DB == postgres ]]; then pip install -q psycopg2-binary; fi
+  - pip install -q Pillow
+  - IDJANGO=$(./travis.py $DJANGO)
+  - pip install -q $IDJANGO
+  - pip install -q coveralls
+script:
+  - django-admin.py --version
+  - coverage run --source=modeltranslation ./runtests.py
+after_success:
+  coveralls

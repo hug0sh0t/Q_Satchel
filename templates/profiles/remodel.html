@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+  Remodeling
+{% endblock head_title%}
+{% block content %}
+
+{% if messages %}
+<br><br><center><div style='width:50%;position:fixed;padding:10px;left:0px;right:0px;top:100px;z-index:9000;background-color:#50C44Aab' 
+id="pmessage_container" 
+class="shadow shadow-lg alert rounded fade show container" 
+role="alert">
+<ul  class="messages">
+    {% for message in messages %}
+    <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+      <center>
+      <h6 style="font-weight:bold;color:white">
+        {{ message }}
+      </h6>
+      </center>
+    </span>
+    </div>
+    {% endfor %}
+  </ul></center>
+{% endif %}
+<br>
+<div>
+<div class='remod_form mt-5 container container-fluid'>
+  <div>
+  
+  <center>
+
+
+    <form style="position:relative"  method='POST' enctype='multipart/form-data'>
+        {% csrf_token %}
+
+
+
+
+
+
+
+
+      <div id="div_id_avatar" class="form-group">
+      <div class=" mb-2">
+
+
+      <div class="input-group mx-5 mb-2">
+          
+          <div class="mx-4 pointer">
+              <span class="text-break" style="flex-grow:1;min-width:0">
+              
+              
+              </span>
+              
+              <span class="align-self-center ml-5">
+                  <span class="custom-control custom-checkbox">
+
+                  </span>
+              </span>
+          
+          </div>
+      </div>
+      <div class="input-group mb-0">
+
+
+        <div class="form-control custom-file pointer mx-2 my-2" style="background:none;border:0">
+            <label style="border:none;padding:0;background:none:boxShadow:none;cursor:pointer" class="custom-file-upload mr-5">
+              <img id="image-preshow" src="/staticmedia/{{profilePicture}}" class="border" style="border-radius:50%;width:75px;height:75px"/>
+
+              
+              <h6 id="imageloaded" style="display:none">
+                <img id="upload-confirmed" src="/staticmedia/bookmark-check-fill.svg" class="zoom filter-green" style="width:35%;height:35%;display:none"/>
+                IMAGE UPLOADED<br><small style="color:grey">Hit checkmark to try again</small></h6> 
+              
+              <input style="display:none" type="file" name="avatar" class="custom-file-input searchbar" accept="image/*">
+            <br><label class="custom-file-label" for="id_avatar" style="font-size:10px;font-weight:bold;font-family:verdana">change your avatar </label>
+            </label>
+
+            
+            <script type="text/javascript" id="script-id_avatar">        
+                document.getElementById("script-id_avatar").parentNode.querySelector('.custom-file-input').onchange =  function (e){
+                    var filenames = "";
+                    $(".custom-file-label").attr("style", "color:#2cac30;font-size:15px;")
+
+                    for (let i=0;i<e.target.files.length;i++){
+                        filenames+=(i>0?", ":"")+e.target.files[i].name;
+                    }
+                    e.target.parentNode.querySelector('.custom-file-label').textContent=filenames;
+                    filenames
+       
+                    $('#image-preshow').attr('class', "zoom");
+
+                    $('#imageloaded').attr('style', "display:block;color:#50C44A");
+                    $('#avatarTip').attr('style', "display:block");    
+                    $('#image-preshow').attr('style', "display:none");
+                    $('#upload-confirmed').attr('style', "width:30%;height:30%;display:block");
+      
+                }        
+            </script>
+        </div>
+      
+
+      </div>
+    </div>
+
+
+
+<div class="input-group" style="position:relative">
+<h6 style="opacity:.7">username :{{request.user.username}}</h6>
+          <h6 class="mx-4">first name
+          {{ form.first_name | as_crispy_field }}</h6>
+          <h6 class="mx-4">last name
+          {{form.last_name | as_crispy_field}}</h6>
+           <h6 class="mx-4">location
+           {{form.location | as_crispy_field}}</h6>
+
+</div><br>
+
+
+
+
+
+
+
+
+         
+      <h6><br>
+           <div class="myDIV" style="left:0px;right:0px;position:relative">
+           <span>
+                <button  
+                type="button"      
+                onclick="toggleStyle('dark.css')" 
+                style="border:none;background:none;box-shadow:none" 
+                class="darktoggle btn btn-sm "> 
+                    {% comment %} <img alt="darkness" src="/staticmedia/moon.svg" style="width:50px;height:50px" /> {% endcomment %}
+                        <div class="card shadow shadowlg" style="padding:20px;border:none"><strong style="color:#00000">DARK MODE</strong></div>
+
+                  </button>
+            
+                  
+                    <button
+                    type="button"
+                    style="border:none;background:none;box-shadow:none" 
+                    onclick="toggleStyle('light.css')" 
+                    class="lighttoggle btn btn-sm btn-outline-dark"> 
+                        <div class="card shadow shadowlg" style="padding:20px;border:none"><strong style="color:#fff">LIGHT MODE</strong></div>
+                    </button>
+              </div><h6 class="hide" style="font-size:9px;position:relative">
+                toggle scenery </h6>
+              
+            </span>
+    </div><br><br></h6>
+
+
+
+
+    <h6>About You <br>{{form.bio|as_crispy_field}}</h6>
+
+
+
+    <span class="btn-group col container container-fluid" style="position:relative">
+
+        <button type='submit' style="font-weight:bold;font-size:15px;border:none;background:none;box-shadow:none" class='myDIV btn-control btn btn-outline-success btn-lg btn-block'>
+          SAVE CHANGES
+        </button>
+    </span>
+    </form>
+  </center>
+      
+ </div>
+ <br><br><br><br>
+</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,171 @@
+<style>
+.filter-green{
+  filter: invert(64%) sepia(8%) saturate(2971%) hue-rotate(69deg) brightness(98%) contrast(102%);
+}
+
+
+
+</style>
+<nav class="navbar navbar-expand-lg mainnavbar" style="background:#fff" >
+  <div class="container-fluid">
+    <a class="" href="/" style="font-family:'Verdana',sans-serif;font-weight:bold;font-size:20px;color:#50C44A">
+    <img style="width:55px;height:55px;display:none" src="/staticmedia/darkerrunway.svg" class="lighttoggle"/>
+    <img style="width:55px;height:55px" src="/staticmedia/whiterunway.svg" class="darktoggle"/>
+    </a>
+
+
+
+
+
+
+<!--search-->
+<span style="position:relative;left:0px">
+        <form method="post" 
+            class="formbox" 
+            style="position:relative" 
+            rel="search"
+            action="/search/nothing"> {% csrf_token %}
+                <div class="input-group input-group-lg">
+    
+                <input type="text"
+                    required="required"  
+                    style="border-radius:25px"
+                    class="searchbar border input-group-lg rounded" 
+                    name="valuebox"
+                    id="valuebox"
+                    placeholder="find pockets/people "/>
+             
+
+               
+                    
+                        </div>
+                            <button 
+                            type="submit" 
+                            style="border:none;background:none" 
+                            class="locate d-none btn btn-sm" >
+                            </button>
+                        
+                        
+        </form>
+         
+
+    </span>
+
+
+
+<!----> 
+
+
+
+
+
+
+
+
+
+
+    <button id="dropdownManual" style="border:none;backgrond:none;text-decoration:none;box-shadow:none" class="btn btn-lg">
+      <span class="navbar-toggler-icon">
+      <img id="menuToggleOpen" src="/staticmedia/dropdown.svg" class="filter-green" style="width:30px;height:30px;transform:rotate(180deg)"/>
+      <img id="menuToggleClose" src="/staticmedia/dropdown.svg" class="filter-red" style="width:50px;height:50px;display:none"/>
+
+      </span>
+    </button>
+
+
+<!--
+    <div class="collapse navbar-collapse" id="menuBarIcons">
+      
+          <a class="insertUtil nav-link pointer" 
+          href="/"
+          style="font-weight:bold" 
+          tabindex="-1" 
+          aria-disabled="true">
+
+
+          <img class="filter-green" src="/staticmedia/create.svg"/>
+
+          CREATE
+          
+          </a>
+       
+  
+
+    </div>
+  -->
+  
+  </div>
+
+
+
+
+
+
+
+</nav>
+
+      <div id="dropdownPHONE" style="" class="settings shadow shadow-lg rounded">
+     
+                  <a id="createHover" class="insertUtil nav-link pointer" 
+                  href="/"
+                  style="font-weight:bold;border-radius:5px" 
+                  tabindex="-1" 
+                  aria-disabled="true">
+                  <img id="createMenuBarIcon" class="filter-grey" src="/staticmedia/stack.svg"/>
+
+                  ADD TRADE
+                  
+                  </a>
+           <br><br>
+            
+
+                <a id="analyzeHover" class="analyzeUtil nav-link" id="analyzeUtil" style="font-weight:bold;border-radius:5px" href="/profiles/analyze/charts" tabindex="-1" aria-disabled="true">
+                  <img id="analyzeMenuaBarIcons" class="filter-grey" src="/staticmedia/bar-chart-fill.svg"/>
+                  ANALYZE PORTFOLIO
+                  
+
+                </a>
+      <br><br>
+
+             
+                <a id="passwordHover" class="analyzeUtil nav-link" id="analyzeUtil" style="font-weight:bold;border-radius:5px" href="/oauth/password/change/" tabindex="-1" aria-disabled="true">
+                          <img id="passwordMenuaBarIcons" class="filter-grey" src="/staticmedia/lock-fill.svg"/>
+
+                  ACCOUNT SECURITY
+                  
+
+                </a>
+             <br><br>
+
+                              
+                <a id="profileHover" class="analyzeUtil nav-link" id="analyzeUtil" style="font-weight:bold;border-radius:5px" href="/profiles/{{request.user}}" tabindex="-1" aria-disabled="true">
+                                  <img id="pMenuaBarIcons" class="filter-grey" src="/staticmedia/person-circle.svg"/>
+
+                  CHECK PROFILE 
+                </a><br><br>
+              
+                <a id="settingsHover" class="analyzeUtil nav-link" id="analyzeUtil" style="font-weight:bold;border-radius:5px" href="/profiles/edit" tabindex="-1" aria-disabled="true">
+                                  <img id="settingsMenuaBarIcons" class="filter-grey" src="/staticmedia/wrench.svg"/>
+
+                  ADJUST PROFILE
+                </a>
+             <br><br>
+
+              
+                <a id="logoutHover" class="logoutUtil nav-link" id="" style="font-weight:bold;border-radius:5px" href="/oauth/logout" tabindex="-1" aria-disabled="true">
+                                  <img id="LogoutMenuBar" class="filter-grey" src="/staticmedia/powerbutton.svg"/>
+
+                  SIGN OUT
+                </a> 
+             
+                      
+      
+        </div>
+        
+
+
+
+
+<script>
+
+</script>

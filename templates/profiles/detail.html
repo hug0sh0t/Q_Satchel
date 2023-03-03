@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% block head_title %}Finance Profile{% endblock head_title %}
+
+{% block content %}
+{% load humanize %}
+   
+
+<center class="jumbotron container" style="position:relative" >
+
+
+<div class="container container-fluid" style="position:relative;height:auto;padding:20px">
+
+
+
+{% for p in profiles %}
+   
+  <div class="" style="padding:9px;position:relative">
+
+<h6 style="font-weight:bold;font-family:Verdana,sans-serif;font-size:10px;position:relative">
+
+ 
+  <a  href="/staticmedia/{{p.avatar}}">
+    <img class="shadow-lg mx-1 my-3" alt="profile_finance" src="/staticmedia/{{p.avatar}}" style="width:150px;height:150px;border-radius:50%" />
+  </a>
+<h6> @ {{username}} </h6>
+
+
+
+
+<h6>
+
+
+    {% if username|cut:" " == request.user|cut:" " %}
+      {% if p.user.first_name %}
+          Welcome {{p.user.first_name}} {{p.user.last_name}} <br>
+      {% else %}   
+          Welcome {{p.user}} <br>          
+          {% endif %}   
+
+      {% if oauth_email %}
+
+        {% for o in oauth_email %}
+        <small style="color:grey">{{o}}</small> 
+        {% endfor %}
+
+        {% else %}
+        <small style="color:grey"> you have not Authenticated an email account </small> <br><br>
+        
+      {% endif %}
+
+  <br>
+  <span class="col">
+          {% if followers_count == 1 %}
+          <br><a href="/profiles/{{username}}/followers">  {{followers_count}} <span style="color:grey;opacity:.8">FOLLOWER</span> </a>
+            {% else %}
+          <br><a href="/profiles/{{username}}/followers">  {{followers_count}} <span style="color:grey;opacity:.8">FOLLOWERS</span> </a>
+          
+          {% endif %}
+
+          <br>
+
+          {% if following_count == 1 %}
+            <a href="/profiles/{{username}}/following"> <span style="color:grey;opacity:.8">FOLLOWING</span> {{following_count}}   </a>
+            <br>
+            {% else %}
+             <a href="/profiles/{{username}}/following"> <span style="color:grey;opacity:.8">FOLLOWING</span> {{following_count}}  </a>
+            <br>
+          {% endif %}
+  </span>
+    {% endif %}
+      </h6>
+
+      {% if username|cut:" " == request.user|cut:" " %}
+                    
+          <center class="my-2 d-none"><a style="padding:7px;border:none;position:relative;z-index:1000;width:35%" class="settings shadow shadow-lg justify-content-center btn btn-light nav-link pointer" 
+                  href="/oauth/email/" 
+                  tabindex="-1" aria-disabled="true">
+            <h6>EMAIL SETUP</h6>
+          </a></center>
+
+ 
+
+  
+
+    {% else %}
+          <h6 class="my-4">
+                <strong >
+                {% if qsone.is_online %}
+                  <strong style="color:#50C44A">  Online </strong>
+                {% else %}
+                    <strong style="color:crimson">  Offline </strong> 
+                {% endif %}
+                <br><br>
+                <!--FOLLOWERS BUTTON CONFIGURATION-->
+
+                {% if followers_count == 1 %}
+                <a href="/profiles/{{username}}/followers"> <h6 class="followers_am">{{followers_count}} FOLLOWER </h6>  </a>
+                {% else %}
+                <a href="/profiles/{{username}}/followers"> <h6 class="followers_am">{{followers_count}} FOLLOWERS </h6>  </a>
+              {% endif %}
+                 <a href="/profiles/{{username}}/following"> <h6 class="following_am">  FOLLOWING {{following_count}}  </h6>  </a>
+ 
+                 <br>
+ 
+
+                {% comment %} <form method="POST" 
+                  id="Follow_Unfollow_toggle" 
+                  style="background:none;position:relative" 
+                  class="form-control" 
+                  action="/profiles/{{username|cut:" "}}/follow_activation/{{request.user|cut:" "}}/">
+                    {% csrf_token %}  {% endcomment %}
+                <button type="button"
+                   data-href="/profiles/{{username|cut:" "}}/follow_activation/{{request.user|cut:" "}}/"
+                   style="font-weight:bold;padding:9px;border:none"
+                   class="connection_toggle my-3 btn btn-outline-info" > {{button_action}} 
+                  </button><br>
+                {% comment %} </form>
+                
+                 {% endcomment %}
+                </strong>
+                <br><br>
+          </h6>  
+    {% endif %}
+
+
+
+
+    <!--CUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFFCUTOFF-->
+ 
+<span>
+      <br><br>
+              {% if p.location %}
+        <h6>
+        <img src="/staticmedia/dot.svg" style="width:20px;height:20px"/>
+        from {{p.location}}</h6><br>
+        
+        {% else %}
+          {% if username|cut:" " == request.user|cut:" " %}
+          <h6 style="color:grey">you have not set your location ... </h6><br>
+          {% else %}
+          <h6 style="color:grey">this members location is a mystery ... </h6><br>
+          {% endif %}
+
+        {% endif %}
+    <br>
+
+
+
+  
+
+        {% if p.bio %}
+        <div class="shadow-lg  rounded" style="padding:20px;position:relative;width:70%">
+   
+          <img class="lighttoggle" src="/staticmedia/pcards/dark/about.svg" style="bottom:0;opacity:.3;position:absolute;width:50px;height:50px;float:left"/>
+          <img class="darktoggle" src="/staticmedia/pcards/light/about.svg" style="bottom:0;opacity:.1;position:absolute;width:50px;height:50px;float:left"/>
+     
+        
+          <h5 style="font-size:17px">{{p.bio}}</h5><br>
+        </div>
+        
+        
+        {% else %}
+        {% if username|cut:" " == request.user|cut:" " %}
+          <div class="shadow-lg  rounded" style="padding:17px;position:relative;width:70%">
+        
+          <img class="lighttoggle" src="/staticmedia/pcards/dark/about.svg" style="bottom:0;opacity:.3;position:absolute;width:50px;height:50px;float:left"/>
+          <img class="darktoggle" src="/staticmedia/pcards/light/about.svg" style="bottom:0;opacity:.1;position:absolute;width:50px;height:50px;float:left"/>
+         
+        
+          <h5 style="font-size:17px;color:grey">you have not created a bio</h5><br>
+        </div>
+          {% else %}
+          <div class="shadow-lg  rounded" style="padding:15px;position:relative;width:70%">
+          <img class="lighttoggle" src="/staticmedia/pcards/dark/about.svg" style="bottom:0;opacity:.3;position:absolute;width:50px;height:50px;float:left"/>
+          <img class="darktoggle" src="/staticmedia/pcards/light/about.svg" style="bottom:0;opacity:.1;position:absolute;width:50px;height:50px;float:left"/>
+          <h5 style="font-size:12px;color:grey">No bio ... </h5><br>
+        </div>        {% endif %} 
+
+        {% endif %}
+     
+
+
+    
+    </span>
+ </div>
+{% endfor %}
+</div>
+</center>
+
+{% endblock content %}

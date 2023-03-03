@@ -1,0 +1,644 @@
+{% extends 'base.html' %}
+{% block head_title %} CARD CREATION{% endblock head_title %}
+{% block content %}
+{% load humanize %}
+
+<div class="rounded negativeTipPOP" id="negativeTipclose" 
+style="cursor:pointer;background:#FFD7D7;border-radius:0%;display:none;z-index:50000;position:fixed;padding:15px;width:250px;top:5px;right:5px"> 
+<strong style="opacity:.7">
+<img src="/staticmedia/shout.svg" class="filter-red" style="opacity:.2;width:60px;height:60px;position:absolute"/>
+For Losses , insert Hyphen (-) before value </strong>
+
+</div>
+
+
+{% if messages %}
+<div style='margin:auto;border:none;position:fixed;bottom:100px;left:20px;right:20px;font-weight:bold;padding:10px;z-index:1600;width:350px' 
+id="pmessage_container" 
+class="darkercard alert fade show container" 
+role="alert">
+<ul  class="messages" style="margin:auto">
+    {% for message in messages %}
+    <span{% if message.tags %} class="justify-content-center {{ message.tags }}"{% endif %}>
+
+         <h6 class="mx-2" style=""> {{ message }}   </h6>
+
+    </span>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+
+
+   <!--ADJUSTMENT RENDER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+{% if pockets_amount > 0 %}
+  <div
+      style="width:100%;padding:10px;border:none;position:relative;display:block;border-radius:0%"
+      class="togglePanel settings btn btn-light nav-link "
+      aria-disabled="true">
+   <h6 id="filtertoggle" style="color:#50C44A"><img src="/staticmedia/filter.svg" class="pointer" style="width:20px;height:15px"/> </h6>
+  </div>
+
+
+  <div
+      style="width:100%;padding:10px;border:none;position:relative;display:none;border-radius:0%"
+      class="filterPanel settings btn btn-light nav-link "
+      aria-disabled="true">
+  <h6 id="filterclose" style="color:crimson"><img src="/staticmedia/filter.svg" style="margin:auto;;width:20px;height:15px" class="filter-red"/> </h6>
+
+
+<span style="">
+   <form method='POST' class="container container-fluid my-5" style="width:100%;position:relative" action='api/pockets/'> {% csrf_token %}
+        
+        
+        <select style="display:none" name="category" class="form-select form-select-lg" required=required>
+            {% comment %} <option value='-pocket_time_instance'> Recent Pockets Top to Bottom </option>
+            <option value="pocket_time_instance">Oldest Pockets Top to Bottom</option>
+            <option value="-price">High Price Top to Bottom</option>
+            <option value="price">Low Price Top to Bottom</option> {% endcomment %}
+            <option  id="positionSelector" value="pocket_time_instance">FORMAT</option>
+
+        </select>
+
+
+<div class="col" style="width:100%">
+
+
+    {% if user_order_matrix == 'price' %}
+                <h6 style="color:#50C44A">Currently Set to Lower Prices First
+                <img src="/staticmedia/sort-down-alt.svg" class="filter-green" style="width:45px;height:45px"/></h6>
+
+
+        {% else %}
+            <input id='lowPriceFirstSelector' style='width:100%;position:relative;width:60%;border:none' type="submit" class='positionButtons' value="Low Price First">
+    {% endif %}
+
+
+    {% if user_order_matrix == '-price' %}
+
+                    <h6 style="color:#50C44A">Currently Set to Higher Prices First
+                    <img src="/staticmedia/sort-up.svg" class="filter-green" style="width:45px;height:45px"/></h6>
+
+
+            {% else %}
+            <input id='highPriceFirstSelector' style='width:100%;position:relative;width:60%;border:none' type="submit" class='positionButtons' value="High Price First">
+    {% endif %}
+            
+
+      {% if user_order_matrix == '-pocket_time_instance' %}
+
+            <h6 style="color:#50C44A">Currently Set to Latest Pockets First 
+            <img src="/staticmedia/clock.svg" class="filter-green" style="width:45px;height:45px"/></h6>
+
+      {% else %}
+            <input id='recentSelector' style='width:100%;position:relative;width:60%;border:none' type="submit" class='positionButtons' value="Latest First">
+      {% endif %}
+      
+      {% if user_order_matrix == 'pocket_time_instance' %}
+ 
+            <h6 style="color:#50C44A">Currently Set to Oldest Pockets First
+            <img src="/staticmedia/clock.svg" class="filter-green" style="width:40px;height:40px"/></h6>
+
+      {% else %}
+              <input id='olderSelector' style='width:100%;position:relative;width:60%;border:none' type="submit" class='positionButtons' value="Oldest First">
+
+      {% endif %}
+
+          
+    {% if user_order_matrix == 'title' %}
+                <h6 style="color:#50C44A">Forward Alphabetical 
+                <img src="/staticmedia/sort-alpha-down.svg" class="filter-green" style="width:45px;height:45px"/></h6>
+
+
+        {% else %}
+            <input id='forwardAplhaSelector' style='width:100%;position:relative;width:60%;border:none' type="submit" class='positionButtons' value="Forward Alphabetical ">
+    {% endif %}
+
+
+        {% if user_order_matrix == '-title' %}
+            <h6 style="color:#50C44A">Backward Alphabetical
+            <img src="/staticmedia/sort-alpha-down-alt.svg" class="filter-green" style="width:45px;height:45px"/></h6>
+        {% else %}
+            <input id='backwardAplhaSelector' style='width:100%;position:relative;width:60%;border:none' type="submit" class='positionButtons' value="Backward Alphabetical">
+        {% endif %}
+        
+
+
+      </div>
+
+    </form>
+  
+    </span>
+
+    
+  </div>
+        
+      {% else %}
+        <center></center>
+    {% endif %}
+    <br>
+
+    
+ 
+
+
+
+              <!--ADJUSTMENT RENDER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+
+
+    <center>
+    <div class="d-none" 
+    style="border-radius:0%;border:none;color:#fff;background:rgba(205, 0, 0, 0.72);position:fixed;top:0;font-weight:bold;width:100%;padding:12px;z-index:70000" 
+    id="pocket-create-form-error">
+    
+    </div></center>
+
+    <div id="create_panel_closer" style="cursor:pointer;padding:15px;position:fixed;z-index:20000;left:15px;bottom:15px;border-radius:50%;border:none" class="card shadow shadow-lg d-none">
+      <img src="/staticmedia/close.svg" class="filter-red zoom" style="width:35px;height:35px"/>
+    </div>
+ 
+    <div id="create_pocket_button" style="cursor:pointer;padding:15px;position:fixed;z-index:8000;right:15px;bottom:15px;border-radius:50%;border:none" class="card shadow shadow-lg">
+      <img src="/staticmedia/stack.svg" class="filter-green" style="width:35px;height:35px"/>
+    </div>
+    
+
+
+
+
+    <div class="row d-none" id="pocket_create_panel" style="z-index:10000;position:absolute;top:20px;bottom:20px;left:20px;right:20px;">
+  
+      <div style="position:relative">
+            <form method="POST" enctype="multipart/form-data" 
+            id="pocket-create-form" 
+            style="position:relative;padding:8" 
+            class="form-control container shadow-lg" 
+            action="/pocketcreate">
+            {% comment %} <span style="color:crimson;float:right;cursor:pointer" id="close_pocketcreate_panel">Close </span> {% endcomment %}
+
+                {% csrf_token %}
+
+
+                <input type="hidden" value="/" name="next"/> <!--For Media Insert-->
+                    <div class="input-group input-group-lg">
+                        
+                        <div class="form-floating">
+                      <input style="width:300px" 
+                        class="form-control " 
+                        name="title"
+                        maxlength='20' 
+                        required="required" 
+                        placeholder="name" 
+                        type="text" value=""/>
+
+                        <label for="floatingTextarea">Title</label>
+                        </div>
+
+                        <div class="form-floating">
+                          <input style="width:300px" 
+                            class="form-control " 
+                            name="exchange"
+                            maxlength='20' 
+                            required="required" 
+                            placeholder="name" 
+                            type="text" value=""/>
+    
+                            <label for="floatingTextarea">Exchange</label>
+                            </div>
+                
+                        <!--PRICE-->
+                        <div class="form-floating mx-2">
+                          <img id="negativeTIPER" style="cursor:pointer;width:10px;height:10px" class="filter-grey" src="/staticmedia/shout.svg"/>
+          
+                                    <input 
+                                        placeholder="$"
+                                        class="form-control "
+                                        type="number" 
+                                        required="required" 
+                                        name="price"
+                                        minlength="1" 
+                                        step="1" required_id="id_price">
+                            <label for="floatingTextarea">Total Value</label>
+                            </div>
+                        <!--PRICE-->
+
+                          <!--COSTBASIS-->
+
+                          <div class="form-floating mx-2">
+                            <input 
+                                placeholder="$"
+                                class="form-control "
+                                type="number" 
+                                required="required" 
+                                name="cost_basis"
+                                minlength="1" 
+                                step="1" required_id="id_cost_basis">
+                    <label for="floatingTextarea">Initial value</label>
+
+                    </div>
+                              <!--COSTBASIS-->
+                </div>
+
+
+
+
+
+
+
+
+            <div class="form-floating">
+                <textarea
+                    style="height:70px"
+                    required='required'
+                    maxlength='200'  
+                    class="form-control my-1" 
+                    name="summary" 
+                    placeholder="Description"></textarea>
+
+            <label for="floatingTextarea">Description</label>
+            </div>
+
+
+
+
+                
+<hr>
+<p style="color:grey"> Date of Transaction</p>
+            <div style="position:relative" class="form-floating mb-5">
+                
+            {{ form.media }}    
+            
+<input type="text" name="pocket_time_instance" style="" 
+class="vDateField form-control rounded" size="15" required="" id="id_pocket_time_instance">
+
+            </div>
+
+          <hr>
+
+ 
+<p style="color:grey"> Category </p>
+
+                <select name="category" class="form-select my-2" id="inputGroupSelect02">
+                    <option value="Futures">Futures </option>
+                    <option value="Cryptocurrency">Cryptocurrency </option>
+                    <option value="FXCurrency">FXCurrency </option>
+                    
+                  
+                    <option value="NFT Valuation">NFT Valuation</option>
+                    <option value="Stock">Stock </option>
+
+                    <option value="Fund Allocation">Fund Allocation </option>
+
+                    
+
+                </select>
+
+          <p style="color:grey"> Direction </p>
+                <select name="direction" class="form-select my-2" id="inputGroupSelect02">
+                  <option value="Short">Short  </option>
+                  <option value="Long">Long </option>
+                  <option value="NFT Valuation">NFT Valuation </option> 
+                  <option value="Fund Allocation">Fund Allocation </option>
+
+
+
+              </select>
+
+
+
+                {% comment %} {{form.media}}
+                {{form.as_p}} {% endcomment %}
+                {% comment %} {{form.currency}} {% endcomment %}
+
+
+                <center>
+                
+                <input type="submit" 
+                style="width:300px;box-shadow:none;border:none;background:#50C44A;color:#fff" 
+                class="pocketCreateButton btn btn-outline-success btn-lg rounded" value="TRACK +"></center>
+
+    </form>
+
+
+
+
+
+
+
+    <center>
+      <div class="d-none my-4" 
+      style="margin:auto;border:none;color:#fff;background:#8DC797;position:fixed;bottom:20px;left:0px;right:0px;font-weight:bold;width:70%;padding:12px" id="pocket-create-form-win">
+      </div>
+    </center>
+
+
+
+
+        </div>
+    </div>
+
+      {% if pockets_amount == 0%}
+      <div id="new_user" class="darkercard" style="color:grey;padding:15px;margin:auto">
+        <h6  class="container">No trades being tracked
+          <img style="width:30px;height:30px" class="filter-grey" src="/staticmedia/emptychart.svg"/>
+        </h6>
+      </div>
+      {% else %}
+
+      <small style="color:grey;font-weight:bold" class="container">Cards</small>
+      {% endif %}
+ 
+    <!-- UI POCKETS RENDER ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->    
+    <center class="">
+        <div style="position:relative" class="container container-fluid" id="pockets">
+            <div class="spinner-grow text-success" role="status">
+                <span class="visually-hidden">Grabbing Your Pockets ... </span>
+            </div>
+        </div>
+    </center><br>
+
+    <div id="pocket_create_panel_" class="d-none" style="z-index:9000;position:fixed;bottom:0px;top:0px;left:0px;right:0px;background:rgba(128, 128, 128, 0.37)"></div>
+    <div id="pocket_create_panel_filler" class="d-none" style="background:#49494980;width:100%;hieght:100%;position:fixed;left:0px;right:0px;top:0px;bottom:0px"></div>
+
+<!-- SCRIPT FOR CARD ORDERING ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+<script>
+    function order_matrix_func() {
+        const xhr = new XMLHttpRequest()
+        const method = 'GET'
+        const url = '/api/profiles/api'
+        const responseType = 'json'
+        xhr.responseType = responseType
+        xhr.open(method, url)
+        xhr.onload = function() {
+            
+            $("#select").val(xhr.response.order_matrix); 
+        }
+        xhr.send()
+    }
+
+    order_matrix_func()
+
+    var setTheme = localStorage.getItem('theme')
+
+
+
+
+
+
+   // Pockets +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    function handlePocketFormError(msg, display) {
+        var myErrorDiv = document.getElementById("pocket-create-form-error")
+        if (display === true) {
+            myErrorDiv.setAttribute("class", "alert alert-danger")
+
+            myErrorDiv.innerText = msg
+            myErrorDiv.innerHTML='<img src="/staticmedia/shout.svg" class="filter-red" style="width:30px;height:30px" /> ' + msg
+
+            setTimeout(function(){
+         
+                myErrorDiv.setAttribute("class", "d-none")
+                
+            },2500)
+
+        } else {
+            myErrorDiv.setAttribute("class", "d-none")
+        }
+    }
+
+    function handlePocketSuccess(msg, display) {
+        var myCreateDiv = document.getElementById("pocket-create-form-win")
+        // var newUser = document.getElementById("new_user")
+        if (display === true) {
+            myCreateDiv.setAttribute("class", "alert alert-success")
+            // newUser.setAttribute("class","d-none")
+            myCreateDiv.innerText = msg
+            myCreateDiv.innerHTML= msg
+            $('#new_user').attr("class", "container d-none")
+
+
+            setTimeout(function(){
+                myCreateDiv.setAttribute("class", "d-none")
+            },2500)
+        } else {
+            myCreateDiv.setAttribute("class", "d-none")
+        }
+    }
+
+    function handlePocketCreateFormDidSubmit(event) {
+        event.preventDefault()
+        const myForm = event.target
+        const myFormData = new FormData(myForm)
+        const url = myForm.getAttribute("action")
+        const method = myForm.getAttribute("method")
+        const xhr = new XMLHttpRequest()
+        const responseType = 'json'
+        xhr.responseType = responseType
+        xhr.open(method, url)
+        xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+        // Error RESPONSE HANDLERS
+        xhr.onload = function() {
+            if (xhr.status === 201) {
+                handlePocketSuccess("Analytics Have Been Updated", true)
+                const newPocketJson = xhr.response
+                const newPocketElement = formatPocketElement(newPocketJson)
+                const ogHtml = pocketsContainerElement.innerHTML
+                pocketsContainerElement.innerHTML = newPocketElement + ogHtml
+                myForm.reset()
+            } else if (xhr.status === 400) {
+                const errorJson = xhr.response
+                const contentError = errorJson.summary
+                const titleError = errorJson.title
+                const priceError = errorJson.price
+                const costbasisError = errorJson.cost_basis
+
+                const dateError = errorJson.pocket_time_instance
+
+                let contentErrorMsg;
+                let titleErrorMsg;
+                let priceErrorMsg;
+
+                console.log(errorJson)
+
+                if (priceError) {  
+
+                  if (errorJson.price[0] === "Ensure that there are no more than 8 digits in total.") {
+                      handlePocketFormError('Up to 8 Digit Whole numbers Please', true)
+                  } else  if (errorJson.price[0] === "Ensure that there are no more than 8 digits before the decimal point.") {
+                      handlePocketFormError('No more than 8 digits before the decimal point', true)
+                  } else if (errorJson.price[0] === "Ensure that there are no more than 10 digits in total.") {
+                    handlePocketFormError('No more than 10 digits before the decimal point', true)
+
+                  } else  if (errorJson.price[0] === "Ensure that there are no more than 10 digits before the decimal point.") {
+                    handlePocketFormError('No more than 10 digits before the decimal point', true)
+
+                  }
+                
+                }
+
+
+                if (costbasisError) {  
+
+                  if (errorJson.cost_basis[0] === "Ensure that there are no more than 8 digits in total.") {
+                      handlePocketFormError('Up to 8 Digit Whole numbers for the Initial Value', true)
+                  } else  if (errorJson.cost_basis[0] === "Ensure that there are no more than 8 digits before the decimal point.") {
+                      handlePocketFormError('No more than 8 digits before the decimal point for the Initial Value', true)
+                  } else if (errorJson.cost_basis[0] === "Ensure that there are no more than 10 digits in total.") {
+                    handlePocketFormError('No more than 10 digits before the decimal point for the Initial Value', true)
+
+                  } else  if (errorJson.cost_basis[0] === "Ensure that there are no more than 10 digits before the decimal point.") {
+                    handlePocketFormError('No more than 10 digits before the decimal point for the Initial Value', true)
+
+                  }
+                
+                }
+
+
+
+
+                if (dateError) {  
+                  if (errorJson.pocket_time_instance[0] === "Date has wrong format. Use one of these formats instead: YYYY-MM-DD.") {
+                      handlePocketFormError('Please Follow Date Format', true)
+                  }
+                } else {
+                    console.log(" Error Handle Initiated")
+                }
+
+
+
+                
+            } else if (xhr.status === 401) {
+                alert("You Must Login!")
+                window.location.href = "/oauth/manuallogin"
+            } else if (xhr.status === 403) {
+                alert("You Must Login!")
+                window.location.href = "/oauth/login"
+            } else if (xhr.status === 408) {
+                alert("Request was not made in Time")
+            } else if (xhr.status === 500) {
+                alert("This is a Server Error Alert")
+            } 
+        }
+        xhr.onerror = function() {
+            alert("An Error has Occured ")
+        }
+        xhr.send(myFormData)
+    }
+
+    const pocketCreateFormEl = document.getElementById("pocket-create-form")
+    pocketCreateFormEl.addEventListener("submit", handlePocketCreateFormDidSubmit)
+
+    const pocketsContainerElement = document.getElementById("pockets")
+    
+    function loadPockets(pocketsElement) {
+        const xhr = new XMLHttpRequest()
+        const method = 'GET'
+        const url = '/api/pockets'
+        const responseType = 'json'
+        xhr.responseType = responseType
+
+        xhr.open(method, url)
+        xhr.onload = function() {
+       
+            const serverResponse = xhr.response;
+            var listedItems = serverResponse;
+            var finalPocketStr = "";
+            var i;
+            for (i=0;i<listedItems.length;i++) {
+
+                var pocketObj = listedItems[i]
+                var currentItem = formatPocketElement(pocketObj)
+                finalPocketStr += currentItem;
+                
+            }
+            pocketsElement.innerHTML = finalPocketStr;
+        }
+        xhr.send()
+    }
+
+    loadPockets(pocketsContainerElement)
+
+    function formatDate (dateString) {
+        const options = { year: "numeric", month: "long", day: "numeric" }
+        return new Date(dateString).toLocaleDateString(undefined, options)
+    }
+
+    // JAVASCRIPT CARD RENDERING  
+    function formatPocketElement(pocket) {
+        
+    
+      if (pocket.category == 'NFT Valuation') {
+        if (pocket.receipt == '/staticmedia/firstImageEntry.svg') {
+          category_icon = '<div class="rounded card" style="" ><a href="pockets/'+pocket.id+'/change" ><img id="card_image" class="rounded filter-grey" style="border-radius:15px;position:relative;width:90px;height:90px;opacity:.8;object-fit:contain" src="/staticmedia/firstImageEntry.svg"/></a></div>' 
+          } else {
+            category_icon = '<div class="rounded card" style="padding:40px" ><a href="'+ pocket.receipt+'"><img id="card_image" class="rounded" style="border-radius:15px;position:relative;width:20%;height:20%;opacity:.8;object-fit: contain" src="'+pocket.receipt+'"/></a></div>'
+        }
+      } else {
+        category_icon = '' 
+
+      }
+
+
+
+      delete_request_button = '<form action="/api/pockets/' + pocket.id + '/delete" class="pocket_delete_btn" method="POST" style="">{%csrf_token%}<button id="trash_button" name="delmainbtn" style="cursor:pointer;border:none;top:10px;right:5px;position:absolute;border-radius:25px;padding:10px"><img src="/staticmedia/dookies.svg" style="width:25px;height:25px" class="filter-red"></button></form>'
+      direction_label = '<h6></h6>'
+
+      if (pocket.direction =="Long") {
+        direction_label = '<h6 style="color:#50C44A">Long <img style="width:20px;height:10px;transform:rotate(45deg)" class="filter-green" src="/staticmedia/direction.svg" /></h6>'
+
+      } else if (pocket.direction =="Short") {
+        direction_label = '<h6 style="color:crimson">Short <img style="width:20px;height:10px;transform:rotate(225deg)" class="filter-red" src="/staticmedia/direction.svg" /></h6>'
+      } else if (pocket.direction == "Fund Allocation") {
+        direction_label = '<h6 style="color:grey">Fund Allocation <img style="width:20px;height:10px;transform:rotate(135deg)" class="filter-grey" src="/staticmedia/direction.svg" /></h6>'
+      } else {
+        direction_label = '<h6 style="color:#FFD700">NFT Valuation <img style="width:10px;height:10px" class="filter-gold" src="/staticmedia/hex.svg" /></h6>'
+      }
+
+
+      if (pocket.price < 0) {
+        if (setTheme == 'light.css') {
+           
+              var formattedPocket = category_icon + "<div style='height:170px;padding:25px' class='rounded card mb-5'><span class='col'><strong>Title: " + pocket.title + "</strong><br>Category: <strong>" + pocket.category + 
+              "</strong><br><small class='mx-2' style='color:grey'>Date : </small>" + formatDate(pocket.pocket_time_instance) + 
+              "<br><small class='mx-2' style='color:grey'>Direction : </small>" + direction_label + "</span><span style='font-size:10px;left:0px;position:absolute'></span> <a href='/pockets/"+pocket.id+"/change'><span class='rounded card' style='border:none;border-radius:0%;position:absolute;right:5px;bottom:2px'><img class='rounded filter-grey' style='border-radius:15px;position:relative;width:40px;height:40px;opacity:.8;object-fit: contain' src='/staticmedia/editpocket.svg'/></span></a> " 
+              + delete_request_button + " <h6 style='color:crimson;font-size:20px;font-weight:bold'> $" + pocket.price + "  " + pocket.currency + " </h6></div>"
+
+
+          } else {
+                  
+          
+              var formattedPocket = category_icon + "<div style='height:170px;padding:25px' class='card rounded mb-5'><span class='col'><strong>Title: " + pocket.title + "</strong><br>Category: <strong>" + pocket.category + 
+              "</strong><br><small class='mx-2' style='color:grey'>Date : </small>" + formatDate(pocket.pocket_time_instance) + 
+              "<br><small class='mx-2' style='color:grey'>Direction : </small>" + direction_label + "</span><span style='font-size:10px;left:0px;position:absolute'></span> <a href='/pockets/"+pocket.id+"/change'><span class=' rounded card' style='border:none;border-radius:0%;position:absolute;right:5px;bottom:2px'><img class='filter-grey rounded' style='border-radius:15px;position:relative;width:40px;height:40px;opacity:.8;object-fit: contain' src='/staticmedia/editpocket.svg'/></span></a> " 
+              + delete_request_button + " <h6 style='color:crimson;font-size:20px;font-weight:bold'> $"+ pocket.price + "  " + pocket.currency + " </h6></div>"
+          }
+  
+        } else if (pocket.price >= 0) {
+            if (setTheme == 'light.css') {
+            
+                    var formattedPocket = category_icon + "<div style='height:170px;padding:25px' class='card rounded  mb-5'><span class='col'><strong>Title: " + pocket.title + "</strong><br>Category: <strong>" + pocket.category + 
+                    "</strong><br><small class='mx-2' style='color:grey'>Date : </small>" + formatDate(pocket.pocket_time_instance) + 
+                    "<br><small class='mx-2' style='color:grey'>Direction : </small>" + direction_label + "</span><span style='font-size:10px;left:0px;position:absolute'></span><a href='/pockets/"+pocket.id+"/change'> <span class=' rounded card' style='border:none;border-radius:0%;position:absolute;right:5px;bottom:2px'><img class='filter-grey rounded' style='border-radius:15px;position:relative;width:40px;height:40px;opacity:.8;object-fit: contain' src='/staticmedia/editpocket.svg'/></span></a> " 
+                    + delete_request_button + "  <h6 style='color:#188754;font-size:20px;font-weight:bold'> $"+ pocket.price + "  " + pocket.currency + "  </h6></div>"
+                
+            } else {
+              
+                    var formattedPocket = category_icon + "<div style='height:170px;padding:25px' class='card rounded mb-5'><span class='col'><strong>Title: " + pocket.title + "</strong><br>Category: <strong>" + pocket.category + 
+                      "</strong><br><small class='mx-2' style='color:grey'>Date : </small>" + formatDate(pocket.pocket_time_instance) + 
+                      "<br><small class='mx-2' style='color:grey'>Direction : </small>" + direction_label + "</span><span style='font-size:10px;left:0px;position:absolute'></span> <a href='/pockets/"+pocket.id+"/change'> <span class=' rounded card' style='border:none;border-radius:0%;position:absolute;right:5px;bottom:2px'><img class='filter-grey rounded' style='border-radius:15px;position:relative;width:40px;height:40px;opacity:.8;object-fit: contain' src='/staticmedia/editpocket.svg'/></span></a> " 
+                      + delete_request_button + " <h6 style='color:#188754;font-size:20px;font-weight:bold'> $"+ pocket.price + "  " + pocket.currency + " </h6></div>"
+                
+            }
+
+        }
+      
+
+      return formattedPocket;
+  }
+</script>
+
+
+{% endblock content %}

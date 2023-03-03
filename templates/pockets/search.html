@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="color:grey" class="">
+<span class="btn-group col">
+<button id="peoplebtn" class="btn container" style="cursor:pointer;box-shadow:none" onclick="searchUp()">
+<h4 style="font-size:20px;color:grey" class="peepsearch">people</h4></button>
+<button id="pocketbtn" class="btn container" style="cursor:pointer;box-shadow:none" disabled="true" onclick="searchUp()">
+<h4 style="color:#05e9ff;font-size:20px;" class="pocksearch"> pockets</h4></button><br><br>
+</span>
+<hr style="width:100%">
+
+
+ 
+{% if nogfilter.qs %}
+<div id="spocks" style="display:block" data-toggle="popover" data-trigger="focus" class="pocketFade">
+{% for n in nogfilter.qs %}
+    
+        
+    
+        <span class="card container justify-content-center mb-4 shadow-lg" style="width:300px">
+    <a href="/pockets/{{n.id}}/change">
+    <small style="color:grey;font-size:9px">pocket name: </small>
+        {{n.title}}<br>
+    <small style="color:grey;font-size:9px">category: </small>
+        {{n.category}}<br>
+        
+        {% if n.price < 0 %}
+            <small id="search_price" style="color:crimson">
+            {{n.price}} {{n.currency}}</small>
+        {% else %}
+            <small id="search_price" style="color:#50C44A">
+            {{n.price}} {{n.currency}}</small>
+        {% endif %}
+
+        
+        
+         <hr>
+        <p style="font-size:10px">
+        
+        <small class="container" style="color:grey">description: </small>{{n.summary}}</p> 
+        <p class="container" style="color:grey;font-size:10px"> created {{n.pocket_time_instance | timesince}} ago </p>
+    </a>    
+        </span>
+    
+    
+
+{% endfor %}
+{% else %}
+<span class="pocketinform">
+      <h6 class="container container-fluid" style="color:crimson">
+        <img src="/staticmedia/nothing.svg" class="filter-red" style="width:45px;height:45px;position:relative"/>
+        <strong>{{query}} </strong> ... was not found in the Database  </h6>
+<span>
+{% endif %}
+</div>
+
+        <div id="people" style="display:none" data-toggle="popover" data-trigger="focus" class="peopleFade">
+            {% if profilter.qs %}
+            {% for u in profilter.qs %}
+                
+                    
+                
+                    <span class="card container justify-content-center mb-4 shadow-lg" style=";position:relative;width:300px">
+                <a href="/profiles/{{u}}">
+                
+                
+
+                        <p> 
+                    <img src="/staticmedia/superanons.png" style="opacity:.2;position:absolute;right:1;bottom:1;width:50px;height:50px"/>
+
+                        @{{u}} </p>
+                        <img class="my-2" src="/staticmedia/{{u.avatar}}" style="float:right;border-radius:50%;width:90px;height:90px"/>
+                
+                        {% if u.bio %}
+                            <p style="font-size:10px">{{u.bio}}</p>
+                        {% else %}
+                            <p style="color:grey"> this users Bio is Empty </p>
+                        {% endif %}
+                        </a>
+
+                    </span>
+                
+                
+
+            {% endfor %}
+            {% else %}
+                <h6 class="container container-fluid" style="color:crimson">
+                  <img src="/staticmedia/nothing.svg" class="filter-red" style="width:45px;height:45px;position:relative"/>
+                  <strong>{{query}}</strong> ...  was not found in the Member Database</h6>
+            {% endif %}
+        </div>
+</div>
+
+     
+{% endblock content %}

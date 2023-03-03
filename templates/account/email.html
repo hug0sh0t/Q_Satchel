@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "E-mail Addresses" %}{% endblock %}
+
+{% block content %}
+<center style="position:relative" class="container">
+    <h1>{% trans "E-mail Addresses" %}</h1>
+{% if user.emailaddress_set.all %}
+<p>{% trans 'The following e-mail addresses are associated with your account:' %}</p>
+
+<form action="{% url 'account_email' %}" class="email_list" method="post">
+{% csrf_token %}
+<fieldset class="blockLabels">
+
+  {% for emailaddress in user.emailaddress_set.all %}
+<div class="ctrlHolder">
+      <label for="email_radio_{{forloop.counter}}" class="{% if emailaddress.primary %}primary_email{%endif%}">
+
+      <input id="email_radio_{{forloop.counter}}" type="radio" name="email" {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked"{%endif %} value="{{emailaddress.email}}"/>
+
+{{ emailaddress.email }}
+    {% if emailaddress.verified %}
+    <span class="verified">
+
+    {% trans " verified" %}</span>
+    {% else %}
+
+    <span class="unverified">{% trans "Unverified" %}</span>
+    {% endif %}
+      {% if emailaddress.primary %}<span class="primary">{% trans "|  main primary" %}</span>{% endif %}
+</label>
+</div>
+  {% endfor %}
+
+<div class="buttonHolder">
+      <button class="secondaryAction btn btn-outline-info" style="border:none" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
+      <button class="secondaryAction btn btn-outline-info" style="border:none" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
+      <button class="primaryAction btn btn-danger" style="border:none" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
+</div>
+
+</fieldset>
+</form>
+
+{% else %}
+<p><strong>{% trans 'Warning:'%}</strong> {% trans "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc." %}</p>
+
+{% endif %}
+
+  {% if can_add_email %}
+    <h6>{% trans "Connect your E-mail Address for a Faster, more Secure Login" %}</h6><hr class="container">
+    <h6 style="font-size:9px"> if you Logged In using an authenticated Third-Party account <br>
+     Please enter the Email Associated with that Account
+    <br>A Confirmation Email will be Sent to your Account to let you Verify Your Email, Please Check Your Inbox<br> 
+    <br> You can Connect all your email accounts to one QSatchel Account  
+     </h6>
+
+    <form method="post" action="{% url 'account_email' %}" class="add_email">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button name="action_add" style="border:none" class="btn btn-outline-success " type="submit">{% trans "add to list" %}</button>
+    </form>
+  {% endif %}
+
+
+  {% if messages %}
+<br><br><div><div style='position:relative' 
+id="pmessage_container" 
+class="alert  fade show container" 
+role="alert">
+<ul  class="messages">
+    {% for message in messages %}
+    <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+      <div style="font-size:15px;font-weight:bold">
+      <img src="/staticmedia/darkerrunway.svg" style="width:25px;height:25px"/>
+      <h6 class="container container-fluid" style="" >{{ message }}</h6>
+      
+      </div>
+    </span>
+    </div>
+    {% endfor %}
+  </ul></div>
+{% endif %}
+
+
+{% block extra_body %}
+<script type="text/javascript">
+(function() {
+  var message = "{% trans 'Do you really want to remove the selected e-mail address?' %}";
+  var actions = document.getElementsByName('action_remove');
+  if (actions.length) {
+    actions[0].addEventListener("click", function(e) {
+      if (! confirm(message)) {
+        e.preventDefault();
+      }
+    });
+  }
+})();
+</script>
+{% endblock %}
+{% endblock content %}

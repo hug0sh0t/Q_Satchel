@@ -1,0 +1,24 @@
+.asteriskField {
+    display: none;
+}
+
+.form-control {
+    box-shadow:none;
+    border:none;
+    background-color:#f2f2f2;
+}
+
+a {
+    color:crimson;
+    text-decoration:none;
+}
+
+a:hover {
+    color:darkgoldenrod;
+}
+
+
+.google:hover, .twitter:hover, .facebook:hover {
+    background-color:rgb(240, 255, 242);
+    
+}

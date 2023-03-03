@@ -1,0 +1,11 @@
+{% extends "unauthbase" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Inactive Account" %}{% endblock %}
+
+{% block content %}
+<h1>{% trans "Account Inactive" %}</h1>
+
+<p>{% trans "This specific account is Inactive please head back to your " %} <a href="/profiles/{{request.user}}/">satchel</a></p>
+{% endblock %}

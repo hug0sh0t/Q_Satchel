@@ -1,0 +1,91 @@
+.hide {
+    display: block;
+    opacity: 0.00;
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+    }
+    
+.myDIV:hover + .hide {
+display: block;
+opacity: 1.0;
+
+}
+
+hr {
+    color:white;
+    
+}
+
+body {
+    background-color: #24292d
+}
+
+.lighttype {
+    display:none;
+  }
+
+  .darktype {
+    display:block;
+  }
+  
+
+.jumbotron {
+    background-color: #3b4044;
+    border:none
+
+}
+
+.card {
+    background-color: #3b4044;
+    border:none
+}
+
+.card:hover {
+    background-color: #40464b;
+    border:none
+}
+
+
+h1, h2, h3, h4, h5, h6, p, label, center {
+    color: white
+}
+
+
+.form-select {
+    background-color:#636569;
+    border:none;
+    color:#f2f2f2
+}    
+
+.form-control, .form-control:focus {
+    box-shadow:none;
+    color:white;
+    background-color: #46484b;
+    background:#46484b;
+    border:none;
+}
+
+
+
+input {
+    color:white;
+    background-color: #394047;
+    border:none;
+
+}
+
+
+::placeholder {
+    color:#c8c8c8;
+}
+
+a { 
+    text-decoration:none;
+    color:white;
+  }
+
+a:hover {
+    color:gold;
+  }
+

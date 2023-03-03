@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% if request.user.is_authenticated %}
+{% if request.user == pocket.user %}
+<br><br>
+
+    <div class="container container-fluid" style="background:none;border:none">
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col">
+             
+                {% comment %} <h6>{{pockets}}
+                 </h6> {% endcomment %}
+
+
+           
+    <div class="input-group mb-0">
+      <div class="form-control custom-file pointer mx-2 my-2" style="background:none;border:0">
+          <label style="border:none;padding:0;background:none:boxShadow:none;cursor:pointer" class="custom-file-upload mr-5">
+            
+            {% if pocket_image == "firstImageEntry.svg" %}
+            <img id="image-preshow" src="/staticmedia/firstImageEntry.svg" class="zoom" style="width:30%;height:30%"/>
+            {% else %}
+            <img id="image-preshow" src="/staticmedia/{{pocket_image}}" class="zoom shadow shadow-lg" style="width:30%;height:30%;border-radius:15px"/>
+            {% endif %}
+
+
+            <img id="upload-confirmed" src="/staticmedia/bookmark-check-fill.svg" class="zoom filter-green" style="width:35%;height:35%;display:none"/>
+            
+            
+            <h6 id="imageloaded" style="display:none">IMAGE UPLOADED<br><small style="color:grey">Hit checkmark to try again</small></h6>
+
+              <input style="display:none" type="file" name="receipt" class="custom-file-input searchbar" accept="image/*">
+          <br><label class="custom-file-label" for="id_receipt" style="font-size:10px;font-weight:bold;font-family:verdana"> NFT / Notes / Receipts</label>
+          </label>
+
+          
+          <script type="text/javascript" id="script-id_receipt">        
+              document.getElementById("script-id_receipt").parentNode.querySelector('.custom-file-input').onchange =  function (e){
+                  var filenames = "";
+
+                  $(".custom-file-label").attr("style", "color:#2cac30;font-size:15px;")
+
+                  
+                  
+                  for (let i=0;i<e.target.files.length;i++){
+                      filenames+=(i>0?", ":"")+e.target.files[i].name;
+                  }
+                  e.target.parentNode.querySelector('.custom-file-label').textContent=filenames;
+                  filenames
+
+
+                  $('#image-preshow').attr('style', "display:none");
+                  $('#upload-confirmed').attr('style', "width:30%;height:30%;display:block");
+                  
+                  $('#imageloaded').attr('style', "display:block;color:#50C44A");
+
+              }        
+          </script>  
+      </div>
+    </div>
+
+
+
+  <div class="col darkercard rounded shadow my-2" style="padding:30px;position:relative">
+
+
+                    {{form.title | as_crispy_field}} <br>
+                    <span style="width:200">{{form.summary | as_crispy_field}}</span>
+                    {{form.pocket_time_instance | as_crispy_field }} <br>
+  </div> 
+  <div class="col darkercard rounded shadow my-2" style="padding:30px;position:relative">
+
+                    {{form.exchange | as_crispy_field}}<br>
+                    {{form.category | as_crispy_field}} <br>
+                    {{form.direction | as_crispy_field}} <br>
+  </div> 
+                    
+              
+
+
+                  {% comment %} <div class="col" style="position:relative">
+                    {{form.profit_or_loss | as_crispy_field}}
+                </div> 
+                   {% endcomment %}
+
+                
+            </div>
+        </div>
+
+        <div class="col darkercard rounded shadow my-2" style="padding:30px;position:relative">
+          {% if pocket_PnL < 0%}
+            <small style="color:crimson">Current PnL<br> {{pocket_PnL}}</small>
+          
+          {% else %}
+          
+            <small style="color:#50C44A">Current PnL<br> + ${{pocket_PnL}}</small>
+          {% endif %}
+          
+        
+              {{form.price | as_crispy_field}}
+                 
+            {{form.cost_basis | as_crispy_field}}
+        
+        
+          </div> 
+            
+
+
+
+
+            
+            
+            <br>
+            <button type="submit" style="width:40%;z-index:20000;position:fixed;bottom:5px;right:0px;border:none;color:white;background:#50C44A;border-radius:15px" class="btn btn-lg" >UPDATE</button>
+
+        </form> 
+
+                          <form method="POST" class="mb-2" action="/api/pockets/{{pocket.id}}/delete">
+                            {% csrf_token %}        
+                            <button type="submit" style="border:none;color:white;background:none;border-radius:25px" class="btn btn-danger" >
+                              <img src="/staticmedia/dookies.svg" style="width:25px;height:25px" class="filter-red">
+                            </button>
+                        </form> 
+
+    </div><br>
+
+
+
+{% else %}
+<meta http-equiv="refresh" content="0; URL=/login" />
+{% endif %}
+{% endif %}
+{% endblock content %}
